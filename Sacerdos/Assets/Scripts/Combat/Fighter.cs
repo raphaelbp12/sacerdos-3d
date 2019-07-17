@@ -32,6 +32,7 @@ namespace Scrds.Combat
 
         private void AttackBehaviour()
         {
+            transform.LookAt(target.transform);
             if (timeSinceLastAttack > timeBetweenAttacks) {
                 GetComponent<Animator>().SetTrigger("attack");
                 timeSinceLastAttack = 0;
