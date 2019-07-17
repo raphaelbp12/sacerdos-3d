@@ -4,36 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Mover : MonoBehaviour
+namespace Scrds.Movement
 {
-    [SerializeField] Transform target;
-    
-    Ray lastRay;
-
-    void Update()
+    public class Mover : MonoBehaviour
     {
-        if (Input.GetMouseButton(0)) {
-            MoveToCursor();
+        [SerializeField] Transform target;
+        
+        Ray lastRay;
+
+        void Update()
+        {
+            UpdateAnimator();
         }
-        UpdateAnimator();
-    }
 
-    private void UpdateAnimator()
-    {
-        Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
-        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
-        float speed = localVelocity.z;
-        GetComponent<Animator>().SetFloat("forwardSpeed", speed);
-    }
+        private void UpdateAnimator()
+        {
+            Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
+            Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+            float speed = localVelocity.z;
+            GetComponent<Animator>().SetFloat("forwardSpeed", speed);
+        }
 
-    private void MoveToCursor()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        bool hasHit = Physics.Raycast(ray, out hit);
-
-        if (hasHit) {
-            GetComponent<NavMeshAgent>().destination = hit.point;
+        public void MoveTo(Vector3 destination)
+        {
+            GetComponent<NavMeshAgent>().destination = destination;
         }
     }
 }
