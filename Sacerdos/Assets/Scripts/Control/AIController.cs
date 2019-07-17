@@ -25,6 +25,17 @@ namespace Scrds.Control
 
         public GameObject[] publicPlayers;
         public GameObject publicPlayerToChase;
+
+        private void OnDrawGizmos() {
+
+            if (targetTagType == TagType.Player) {
+                Gizmos.color = Color.red;
+            } else if (targetTagType == TagType.Enemy) {
+                Gizmos.color = Color.green;
+            }
+            Gizmos.DrawWireSphere(transform.position, chaseDistance);
+        }
+
         private void Start() {
 
             if (targetTagType == TagType.Player) {
