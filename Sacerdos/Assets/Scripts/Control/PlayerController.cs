@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Scrds.Movement;
 using Scrds.Combat;
+using Scrds.Core;
 
 namespace Scrds.Control
 {
@@ -24,8 +25,16 @@ namespace Scrds.Control
 
         [SerializeField] CursorMapping[] cursorMappings = null;
 
+        Health health;
+
+        private void Start() {
+            health = GetComponent<Health>();
+        }
+
         void Update()
         {
+            if(health.IsDead()) return;
+
             if(InteractWithCombat()) return;
             if(InteractWithMovement()) return;
             SetCursor(CursorType.None);
@@ -38,6 +47,7 @@ namespace Scrds.Control
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
                 if (target == null) continue;
+                if (target.tag == "Player") continue;
 
                 if (!GetComponent<Fighter>().CanAttack(target.gameObject)) continue;
 

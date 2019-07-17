@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scrds.Combat
+namespace Scrds.Core
 {
     public class Health : MonoBehaviour
     {
@@ -28,6 +28,7 @@ namespace Scrds.Combat
 
             isDead = true;
             GetComponent<Animator>().SetTrigger("die");
+            GetComponent<ActionScheduler>().CancelCurrentAction();
         }
     }
 }

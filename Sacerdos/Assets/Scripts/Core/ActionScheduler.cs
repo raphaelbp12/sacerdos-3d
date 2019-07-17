@@ -14,5 +14,9 @@ namespace Scrds.Core
             }
             currentAction = action;
         }
+
+        public void CancelCurrentAction() {
+            StartAction(null);
+        }
     }
 }
