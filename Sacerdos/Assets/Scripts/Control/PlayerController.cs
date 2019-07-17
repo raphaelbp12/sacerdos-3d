@@ -8,10 +8,27 @@ namespace Scrds.Control
 {
     public class PlayerController : MonoBehaviour
     {
+        enum CursorType
+        {
+            None,
+            Movement,
+            Combat,
+        }
+
+        [System.Serializable]
+        struct CursorMapping {
+            public CursorType type;
+            public Texture2D texture;
+            public Vector2 hotspot;
+        }
+
+        [SerializeField] CursorMapping[] cursorMappings = null;
+
         void Update()
         {
             if(InteractWithCombat()) return;
             if(InteractWithMovement()) return;
+            SetCursor(CursorType.None);
         }
 
         private bool InteractWithCombat()
@@ -22,10 +39,11 @@ namespace Scrds.Control
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
                 if (target == null) continue;
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
                     GetComponent<Fighter>().Attack(target);
                 }
+                SetCursor(CursorType.Combat);
                 return true;
             }
             return false;
@@ -38,12 +56,28 @@ namespace Scrds.Control
 
             if (hasHit)
             {
-                if (Input.GetMouseButtonDown(0)) {
+                if (Input.GetMouseButton(0)) {
                     GetComponent<Mover>().MoveTo(hit.point);
                 }
+                SetCursor(CursorType.Movement);
                 return true;
             }
             return false;
+        }
+
+        private void SetCursor(CursorType type) {
+            CursorMapping mapping = GetCursorMapping(type);
+            Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
+        }
+
+        private CursorMapping GetCursorMapping(CursorType type) {
+            foreach (CursorMapping mapping in cursorMappings)
+            {
+                if (mapping.type == type) {
+                    return mapping;
+                }
+            }
+            return cursorMappings[0];
         }
 
         private static Ray GetMouseRay()
