@@ -119,15 +119,30 @@ PrefabInstance:
       propertyPath: m_Speed
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6174602218506387307, guid: f32750be9af27af468df412734af49f5,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7778594842107701023, guid: f32750be9af27af468df412734af49f5,
         type: 3}
       propertyPath: healthPoints
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 3906542844451520358, guid: f32750be9af27af468df412734af49f5,
+        type: 3}
+      propertyPath: weaponDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906542844451520358, guid: f32750be9af27af468df412734af49f5,
+        type: 3}
+      propertyPath: weaponRange
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2485668130048721184, guid: f32750be9af27af468df412734af49f5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 2485668130048721184, guid: f32750be9af27af468df412734af49f5,
         type: 3}
