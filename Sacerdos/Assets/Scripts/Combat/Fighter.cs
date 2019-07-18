@@ -61,7 +61,7 @@ namespace Scrds.Combat
         {
             GetComponent<ActionScheduler>().StartAction(this);
             target = combatTarget.GetComponent<Health>();
-            print("bla" + target.name);
+            // print("bla" + target.name);
         }
 
         public void Cancel()
