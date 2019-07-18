@@ -27,7 +27,6 @@ namespace Scrds.Control
         public GameObject publicPlayerToChase;
 
         private void OnDrawGizmos() {
-
             if (targetTagType == TagType.Player) {
                 Gizmos.color = Color.red;
             } else if (targetTagType == TagType.Enemy) {
@@ -53,7 +52,7 @@ namespace Scrds.Control
             if (playerToChase != null) {
                 float distance = Vector3.Distance(playerToChase.transform.position, transform.position);
 
-                if (distance < chaseDistance && fighter.CanAttack(playerToChase)) {
+                if (distance < chaseDistance && fighter.IsTargetAlive(playerToChase)) {
                     fighter.Attack(playerToChase);
                 } else {
                     fighter.Cancel();

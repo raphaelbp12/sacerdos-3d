@@ -51,7 +51,7 @@ namespace Scrds.Combat
             return Vector3.Distance(target.transform.position, transform.position) < weaponRange;
         }
 
-        public bool CanAttack(GameObject combatTarget){
+        public bool IsTargetAlive(GameObject combatTarget){
             if (combatTarget == null) return false;
             Health targetToTest = combatTarget.GetComponent<Health>();
             return targetToTest != null && !targetToTest.IsDead();
@@ -79,6 +79,8 @@ namespace Scrds.Combat
         void Hit() {
             if (target == null) return;
             target.TakeDamage(weaponDamage);
+            StopAttack();
+            target = null;
         }
     }
 }
