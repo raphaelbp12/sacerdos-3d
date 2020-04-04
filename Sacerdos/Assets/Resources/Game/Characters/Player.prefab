@@ -29,10 +29,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2485668130048721184, guid: f32750be9af27af468df412734af49f5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7567439040741585149, guid: f32750be9af27af468df412734af49f5,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7567439040741585149, guid: f32750be9af27af468df412734af49f5,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778594842107701023, guid: f32750be9af27af468df412734af49f5,
+        type: 3}
+      propertyPath: healthPoints
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8792569840009083948, guid: f32750be9af27af468df412734af49f5,
         type: 3}
@@ -88,11 +103,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7778594842107701023, guid: f32750be9af27af468df412734af49f5,
-        type: 3}
-      propertyPath: healthPoints
-      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f32750be9af27af468df412734af49f5, type: 3}

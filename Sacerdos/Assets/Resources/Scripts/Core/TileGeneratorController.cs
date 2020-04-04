@@ -15,6 +15,8 @@ public class TileGeneratorController : MonoBehaviour
     
     public NavMeshSurface surface;
 
+    public GameObject playerPrefab;
+
     public void Rebake()
     {
         if (surface)
@@ -43,6 +45,18 @@ public class TileGeneratorController : MonoBehaviour
             }
             Rebake();
         }
+
+        SpawnAtRandomPoint(playerPrefab);
+    }
+
+    void SpawnAtRandomPoint(GameObject prefab)
+    {
+        Vector3 position = new Vector3(UnityEngine.Random.Range(-100f,100f), 0, UnityEngine.Random.Range(-100f, 100f));
+        NavMeshHit hit;
+        NavMesh.SamplePosition(position, out hit, 100, 1);
+        position = hit.position;
+        float angle = UnityEngine.Random.Range(0f,360f);
+        Instantiate(prefab, position, Quaternion.Euler(0, angle, 0));
     }
 
     GameObject SearchTile(int indexI, int indexJ, ConnectionTypes first, ConnectionTypes second, ConnectionTypes? third = null, ConnectionTypes? fourth = null)
