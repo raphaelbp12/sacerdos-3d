@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NavMeshBuilder = UnityEngine.AI.NavMeshBuilder;
+using UnityEngine.AI;
 
 public class TileGeneratorController : MonoBehaviour
 {
@@ -10,6 +12,16 @@ public class TileGeneratorController : MonoBehaviour
     public int height = 3;
     // Start is called before the first frame update
     public List<List<GameObject>> tilesMatrix = new List<List<GameObject>>();
+    
+    public NavMeshSurface surface;
+
+    public void Rebake()
+    {
+        if (surface)
+        {
+            surface.BuildNavMesh();
+        }
+    }
     void Start()
     {
         allTiles = Resources.LoadAll("Game/World/Tiles", typeof(GameObject));
@@ -29,10 +41,11 @@ public class TileGeneratorController : MonoBehaviour
                     Instantiate(tile, position, Quaternion.Euler(0, angle, 0));
                 }
             }
+            Rebake();
         }
     }
 
-    GameObject SearchTile(ConnectionTypes first, ConnectionTypes second, ConnectionTypes? third = null, ConnectionTypes? fourth = null)
+    GameObject SearchTile(int indexI, int indexJ, ConnectionTypes first, ConnectionTypes second, ConnectionTypes? third = null, ConnectionTypes? fourth = null)
     {
         List<GameObject> tilesFound = new List<GameObject>();
         foreach (UnityEngine.Object tile in allTiles)
@@ -66,6 +79,7 @@ public class TileGeneratorController : MonoBehaviour
                         hasFirst = false;
                         hasSecond = false;
                     }
+                    continue;
                 }
 
                 hasFirst = false;
@@ -74,7 +88,9 @@ public class TileGeneratorController : MonoBehaviour
         }
         
         if (tilesFound.Count > 0) {
-            return tilesFound[UnityEngine.Random.Range(0, tilesFound.Count)];
+            GameObject tileFound = tilesFound[UnityEngine.Random.Range(0, tilesFound.Count)];
+            TileController tileController = ((GameObject)tileFound).GetComponent<TileController>();
+            return tileFound;
         } else {
             return null;
         }
@@ -94,7 +110,7 @@ public class TileGeneratorController : MonoBehaviour
             result.Add(row);
         }
 
-        GameObject firstTile = SearchTile(ConnectionTypes.empty, ConnectionTypes.empty);
+        GameObject firstTile = SearchTile(0, 0, ConnectionTypes.empty, ConnectionTypes.empty);
 
         for (int i = 0; i < height; i++)
         {
@@ -140,7 +156,7 @@ public class TileGeneratorController : MonoBehaviour
                         thirdConnection = ConnectionTypes.empty;
                     }
 
-                    GameObject tile = SearchTile(firstConnection, secondConnection, thirdConnection);
+                    GameObject tile = SearchTile(i, j, firstConnection, secondConnection, thirdConnection);
                     result[i][j] = tile;
                 }
             }
