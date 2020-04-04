@@ -183,15 +183,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allTiles: []
-  width: 4
-  height: 4
+  width: 10
+  height: 10
   surface: {fileID: 1472458800}
   playerPrefab: {fileID: 2759534207772293843, guid: 7ae47e95d8961ec48a2e9faccd984c02,
     type: 3}
   enemyPrefab: {fileID: 4626606265147231983, guid: c5036dbf38caf554896c29444c024a8e,
     type: 3}
   camera: {fileID: 1544822302}
-  numberOfEnemies: 1
+  numberOfEnemies: 0
 --- !u!4 &589913611
 Transform:
   m_ObjectHideFlags: 0

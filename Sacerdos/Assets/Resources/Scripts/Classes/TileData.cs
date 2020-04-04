@@ -11,6 +11,7 @@ namespace Scrds.Classes
         public string name;
         public int rotation;
         public List<ConnectionTypes> connectionTypes;
+        public bool alreadyCounted = false;
 
         public TileData(GameObject tileObject)
         {

@@ -62,6 +62,47 @@ namespace Scrds.Core
             }
         }
 
+        int GetNumberOfConnectedTiles(int x, int y)
+        {
+            if (OutOfBounds(x, y))
+            {
+                return 0;
+            }
+
+            TileData tile = tilesMatrix[y][x];
+
+            if (tile.alreadyCounted)
+            {
+                return 0;
+            }
+            return 1;
+        }
+
+        bool OutOfBounds(int x, int y)
+        {
+            if (x < 0)
+            {
+                return true;
+            }
+
+            if (y < 0)
+            {
+                return true;
+            }
+
+            if (x > width)
+            {
+                return true;
+            }
+
+            if (y > height)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         GameObject GetTileObjectByName(string name)
         {
             foreach (UnityEngine.Object tilePrefab in allTiles)
@@ -196,12 +237,14 @@ namespace Scrds.Core
                         }
 
                         ConnectionTypes? thirdConnection = null;
-                        if (j == width - 1) {
-                            thirdConnection = ConnectionTypes.empty;
-                        }
 
                         GameObject tile = SearchTile(i, j, firstConnection, secondConnection, thirdConnection);
-                        result[i][j] = new TileData(tile);
+                        if (tile != null)
+                        {
+                            result[i][j] = new TileData(tile);
+                        } else {
+                            result[i][j] = null;
+                        }
                     }
                 }
             }

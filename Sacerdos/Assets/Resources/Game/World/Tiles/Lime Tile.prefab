@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d5888e874561be941af88f03538a0e93, type: 2}
+  - {fileID: 2100000, guid: 06eafc2220e1e01478735405612a1fb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -153,7 +153,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d5888e874561be941af88f03538a0e93, type: 2}
+  - {fileID: 2100000, guid: 06eafc2220e1e01478735405612a1fb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -215,7 +215,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5270795831817643909}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: 15, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 1, z: 2.5}
   m_Children: []
   m_Father: {fileID: 7048450061127016142}
@@ -247,7 +247,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d5888e874561be941af88f03538a0e93, type: 2}
+  - {fileID: 2100000, guid: 06eafc2220e1e01478735405612a1fb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -341,7 +341,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d5888e874561be941af88f03538a0e93, type: 2}
+  - {fileID: 2100000, guid: 06eafc2220e1e01478735405612a1fb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 7048450061127016142}
   - component: {fileID: 6465621448279887481}
   m_Layer: 0
-  m_Name: Teal Tile
+  m_Name: Lime Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -423,5 +423,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997e460b8c0864d75a983e3bb9055d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connections: 03000000020000000000000000000000
+  connections: 00000000020000000300000000000000
   rotation: 0
