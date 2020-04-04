@@ -22,6 +22,9 @@ MonoBehaviour:
   - type: 2
     texture: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48, type: 3}
     hotspot: {x: 0, y: 0}
+  - type: 3
+    texture: {fileID: 2800000, guid: 44a99ee545fd8ba46a452b12c1f9378b, type: 3}
+    hotspot: {x: 0, y: 0}
 --- !u!1001 &5714826083650325038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33,6 +36,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6174602218506387307, guid: f32750be9af27af468df412734af49f5,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 7567439040741585149, guid: f32750be9af27af468df412734af49f5,
         type: 3}

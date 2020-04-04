@@ -14,6 +14,7 @@ namespace Scrds.Control
             None,
             Movement,
             Combat,
+            GUI
         }
 
         [System.Serializable]
@@ -36,7 +37,13 @@ namespace Scrds.Control
 
         void Update()
         {
-            if(health.IsDead()) {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                SetCursor(CursorType.GUI);
+                return;
+            }
+
+            if (health.IsDead()) {
                 SetCursor(CursorType.None);
                 return;
             }
@@ -64,8 +71,6 @@ namespace Scrds.Control
             }
 
             SetCursor(CursorType.None);
-
-
         }
 
         private CombatTarget checkCombatHover() {
