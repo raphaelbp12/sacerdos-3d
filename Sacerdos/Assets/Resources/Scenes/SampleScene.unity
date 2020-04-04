@@ -183,8 +183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allTiles: []
-  width: 6
-  height: 6
+  width: 4
+  height: 4
   surface: {fileID: 1472458800}
   playerPrefab: {fileID: 2759534207772293843, guid: 7ae47e95d8961ec48a2e9faccd984c02,
     type: 3}
