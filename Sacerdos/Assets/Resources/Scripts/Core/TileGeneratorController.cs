@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TileGeneratorController : MonoBehaviour
 {
-    public Object[] allTiles;
+    public UnityEngine.Object[] allTiles;
     public int width = 3;
     public int height = 3;
     // Start is called before the first frame update
@@ -13,12 +14,28 @@ public class TileGeneratorController : MonoBehaviour
     {
         allTiles = Resources.LoadAll("Game/World/Tiles", typeof(GameObject));
         tilesMatrix = GenerateTilesMatrix();
+
+        for (int i = 0; i < tilesMatrix.Count; i++)
+        {
+            List<GameObject> row = tilesMatrix[i];
+
+            for (int j = 0; j < row.Count; j++)
+            {
+                GameObject tile = row[j];
+                Vector3 position = new Vector3(j*35, 0, i*-35);
+                if (tile != null) {
+                    TileController tileController = tile.GetComponent<TileController>();
+                    float angle = -90*tileController.rotation;
+                    Instantiate(tile, position, Quaternion.Euler(0, angle, 0));
+                }
+            }
+        }
     }
 
     GameObject SearchTile(ConnectionTypes first, ConnectionTypes second, ConnectionTypes? third = null, ConnectionTypes? fourth = null)
     {
         List<GameObject> tilesFound = new List<GameObject>();
-        foreach (Object tile in allTiles)
+        foreach (UnityEngine.Object tile in allTiles)
         {
             bool hasFirst = false;
             bool hasSecond = false;
@@ -57,7 +74,7 @@ public class TileGeneratorController : MonoBehaviour
         }
         
         if (tilesFound.Count > 0) {
-            return tilesFound[Random.Range(0, tilesFound.Count)];
+            return tilesFound[UnityEngine.Random.Range(0, tilesFound.Count)];
         } else {
             return null;
         }
@@ -98,9 +115,13 @@ public class TileGeneratorController : MonoBehaviour
                         secondConnection = previousTile.connections[connectionIndex];
                         firstConnection = ConnectionTypes.empty;
                     } else {
-                        previousTile = result[i][j - 1].GetComponent<TileController>();
-                        connectionIndex = (previousTile.rotation + 2)%4;
-                        firstConnection = previousTile.connections[connectionIndex];
+                        if (result[i][j - 1] != null) {
+                            previousTile = result[i][j - 1].GetComponent<TileController>();
+                            connectionIndex = (previousTile.rotation + 2)%4;
+                            firstConnection = previousTile.connections[connectionIndex];
+                        } else {
+                            firstConnection = ConnectionTypes.empty;
+                        }
 
                         if (i == 0) {
                             secondConnection = ConnectionTypes.empty;
