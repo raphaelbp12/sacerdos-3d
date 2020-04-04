@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NavMeshBuilder = UnityEngine.AI.NavMeshBuilder;
 using UnityEngine.AI;
+using Scrds.Classes;
 
 namespace Scrds.Core
 {
@@ -13,7 +14,7 @@ namespace Scrds.Core
         public int width = 3;
         public int height = 3;
         // Start is called before the first frame update
-        public List<List<GameObject>> tilesMatrix = new List<List<GameObject>>();
+        private List<List<TileData>> tilesMatrix = new List<List<TileData>>();
         
         public NavMeshSurface surface;
 
@@ -36,16 +37,16 @@ namespace Scrds.Core
 
             for (int i = 0; i < tilesMatrix.Count; i++)
             {
-                List<GameObject> row = tilesMatrix[i];
+                List<TileData> row = tilesMatrix[i];
 
                 for (int j = 0; j < row.Count; j++)
                 {
-                    GameObject tile = row[j];
+                    TileData tile = row[j];
                     Vector3 position = new Vector3(j*35, 0, i*-35);
                     if (tile != null) {
-                        TileController tileController = tile.GetComponent<TileController>();
-                        float angle = -90*tileController.rotation;
-                        Instantiate(tile, position, Quaternion.Euler(0, angle, 0));
+                        GameObject tileObject = GetTileObjectByName(tile.name);
+                        float angle = -90*tile.rotation;
+                        Instantiate(tileObject, position, Quaternion.Euler(0, angle, 0));
                     }
                 }
                 Rebake();
@@ -59,6 +60,20 @@ namespace Scrds.Core
             {
                 SpawnAtRandomPoint(enemyPrefab);
             }
+        }
+
+        GameObject GetTileObjectByName(string name)
+        {
+            foreach (UnityEngine.Object tilePrefab in allTiles)
+            {
+                TileController tileController = ((GameObject)tilePrefab).GetComponent<TileController>();
+
+                if (tileController.name == name)
+                {
+                    return (GameObject)tilePrefab;
+                }
+            }
+            return null;
         }
 
         GameObject SpawnAtRandomPoint(GameObject prefab)
@@ -76,13 +91,16 @@ namespace Scrds.Core
             List<GameObject> tilesFound = new List<GameObject>();
             foreach (UnityEngine.Object tile in allTiles)
             {
+                List<ConnectionTypes> connectionsDoubled = new List<ConnectionTypes>();
                 bool hasFirst = false;
                 bool hasSecond = false;
                 int firstIndex = 0;
                 TileController tileController = ((GameObject)tile).GetComponent<TileController>();
-                for (int i = 0; i < tileController.connections.Count; i++)
+                connectionsDoubled.AddRange(tileController.connections);
+                connectionsDoubled.AddRange(tileController.connections);
+                for (int i = 0; i < connectionsDoubled.Count; i++)
                 {
-                    ConnectionTypes connection = tileController.connections[i];
+                    ConnectionTypes connection = connectionsDoubled[i];
                     if (!hasFirst && connection == first) {
                         hasFirst = true;
                         firstIndex = i;
@@ -122,13 +140,13 @@ namespace Scrds.Core
             }
         }
 
-        List<List<GameObject>> GenerateTilesMatrix()
+        List<List<TileData>> GenerateTilesMatrix()
         {
-            List<List<GameObject>> result = new List<List<GameObject>>();
+            List<List<TileData>> result = new List<List<TileData>>();
 
             for (int i = 0; i < height; i++)
             {
-                List<GameObject> row = new List<GameObject>();
+                List<TileData> row = new List<TileData>();
                 for (int j = 0; j < width; j++)
                 {
                     row.Add(null);
@@ -143,24 +161,24 @@ namespace Scrds.Core
                 for (int j = 0; j < width; j++)
                 {
                     if (j == 0 && i == 0) {
-                        result[0][0] = firstTile;
+                        result[0][0] = new TileData(firstTile);
                     } else {
                         ConnectionTypes secondConnection = ConnectionTypes.empty;
 
                         int previousTileIndex = j - 1;
-                        TileController previousTile = firstTile.GetComponent<TileController>();
+                        TileData previousTile = result[0][0];
                         ConnectionTypes firstConnection = ConnectionTypes.empty;
                         int connectionIndex = 0;
                         if (j == 0) {
-                            previousTile = result[i - 1][0].GetComponent<TileController>();
+                            previousTile = result[i - 1][0];
                             connectionIndex = (previousTile.rotation + 3)%4;
-                            secondConnection = previousTile.connections[connectionIndex];
+                            secondConnection = previousTile.connectionTypes[connectionIndex];
                             firstConnection = ConnectionTypes.empty;
                         } else {
                             if (result[i][j - 1] != null) {
-                                previousTile = result[i][j - 1].GetComponent<TileController>();
+                                previousTile = result[i][j - 1];
                                 connectionIndex = (previousTile.rotation + 2)%4;
-                                firstConnection = previousTile.connections[connectionIndex];
+                                firstConnection = previousTile.connectionTypes[connectionIndex];
                             } else {
                                 firstConnection = ConnectionTypes.empty;
                             }
@@ -171,9 +189,9 @@ namespace Scrds.Core
                                 if (result[i -1][j] == null) {
                                     continue;
                                 }
-                                TileController previousRowTile = result[i -1][j].GetComponent<TileController>();
+                                TileData previousRowTile = result[i -1][j];
                                 connectionIndex = (previousRowTile.rotation + 3)%4;
-                                secondConnection = previousRowTile.connections[connectionIndex];
+                                secondConnection = previousRowTile.connectionTypes[connectionIndex];
                             }
                         }
 
@@ -183,7 +201,7 @@ namespace Scrds.Core
                         }
 
                         GameObject tile = SearchTile(i, j, firstConnection, secondConnection, thirdConnection);
-                        result[i][j] = tile;
+                        result[i][j] = new TileData(tile);
                     }
                 }
             }

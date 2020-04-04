@@ -1,5 +1,8 @@
-﻿public enum ConnectionTypes {
-    empty,
-    a,
-    b
+﻿namespace Scrds.Classes
+{
+    public enum ConnectionTypes {
+        empty,
+        a,
+        b
+    }
 }
