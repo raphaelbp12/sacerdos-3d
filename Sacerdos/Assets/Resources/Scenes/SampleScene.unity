@@ -191,7 +191,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 4626606265147231983, guid: c5036dbf38caf554896c29444c024a8e,
     type: 3}
   camera: {fileID: 1544822302}
-  numberOfEnemies: 100
+  numberOfEnemies: 200
 --- !u!4 &589913611
 Transform:
   m_ObjectHideFlags: 0
@@ -750,7 +750,7 @@ PrefabInstance:
     - target: {fileID: 2337886744571671808, guid: 9030f49cf01114d4d86501b91892dbe8,
         type: 3}
       propertyPath: heightOffset
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2337886744571671808, guid: 9030f49cf01114d4d86501b91892dbe8,
         type: 3}

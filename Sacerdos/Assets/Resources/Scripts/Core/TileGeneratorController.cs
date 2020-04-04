@@ -63,7 +63,7 @@ namespace Scrds.Core
 
         GameObject SpawnAtRandomPoint(GameObject prefab)
         {
-            Vector3 position = new Vector3(UnityEngine.Random.Range(-100f,100f), 0, UnityEngine.Random.Range(-100f, 100f));
+            Vector3 position = new Vector3(UnityEngine.Random.Range(0,35f*width), 0, UnityEngine.Random.Range(0, -35f*height));
             NavMeshHit hit;
             NavMesh.SamplePosition(position, out hit, 100, 1);
             position = hit.position;
