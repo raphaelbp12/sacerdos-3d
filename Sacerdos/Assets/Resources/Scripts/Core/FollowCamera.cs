@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Scrds.Control;
 
 namespace Scrds.Core
 {
     public class FollowCamera : MonoBehaviour
     {
-        [SerializeField] Transform target;
+        [SerializeField] public Transform target;
 
         [SerializeField] float heightOffset = 7;
         [SerializeField] float zOffset = 4;
