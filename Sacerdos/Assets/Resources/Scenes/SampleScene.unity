@@ -183,15 +183,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allTiles: []
-  width: 10
-  height: 10
+  width: 6
+  height: 6
   surface: {fileID: 1472458800}
   playerPrefab: {fileID: 2759534207772293843, guid: 7ae47e95d8961ec48a2e9faccd984c02,
     type: 3}
   enemyPrefab: {fileID: 4626606265147231983, guid: c5036dbf38caf554896c29444c024a8e,
     type: 3}
   camera: {fileID: 1544822302}
-  numberOfEnemies: 0
+  numberOfEnemies: 1
 --- !u!4 &589913611
 Transform:
   m_ObjectHideFlags: 0
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -507,7 +507,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 26ca6bed7c4843c8289a4cf14fd1be78, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!4 &1472458801
 Transform:
   m_ObjectHideFlags: 0
