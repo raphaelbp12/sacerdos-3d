@@ -6,13 +6,14 @@ public class BindingsController : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    Dictionary<string, Skill> bindings;
+    public Dictionary<string, Skill> bindings;
 
     void Start()
     {
         bindings = new Dictionary<string, Skill>();
 
         bindings.Add("F1", new MeteoroDePegasusSkill());
+        bindings.Add("F2", new MeteoroDePegasusSkill());
     }
 
     void OnGUI()
@@ -21,7 +22,6 @@ public class BindingsController : MonoBehaviour
         if (e.isKey)
         {
             string key = e.keyCode.ToString();
-            Debug.Log(key);
             if (bindings.ContainsKey(key))
             {
                 bindings[key].DoAction();
