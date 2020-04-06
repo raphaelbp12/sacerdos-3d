@@ -1,0 +1,24 @@
+ 
+{
+  'Experience': 100,
+  'Strength': 100,
+  'Intelligence': 100,
+  'Dexterity': 100,
+  'Equipment': {
+    'Helmet': 100,
+    'Ring1': 100,
+    'Ring2': 100,
+    'Amulet': 100,
+    'Armor': 100,
+    'Gloves': 100,
+    'Shoes': 100,
+    'Weapon': 100,
+    'OffHand': 100,
+    'Belt': 100,
+    'Flask1': 100,
+    'Flask2': 100,
+    'Flask3': 100,
+    'Flask4': 100,
+    'Flask5': 100,
+  }
+}
