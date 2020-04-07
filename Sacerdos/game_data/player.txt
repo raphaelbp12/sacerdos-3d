@@ -1,24 +1,25 @@
  
 {
-  'Experience': 100,
-  'Strength': 100,
-  'Intelligence': 100,
-  'Dexterity': 100,
-  'Equipment': {
-    'Helmet': 100,
-    'Ring1': 100,
-    'Ring2': 100,
-    'Amulet': 100,
-    'Armor': 100,
-    'Gloves': 100,
-    'Shoes': 100,
-    'Weapon': 100,
-    'OffHand': 100,
-    'Belt': 100,
-    'Flask1': 100,
-    'Flask2': 100,
-    'Flask3': 100,
-    'Flask4': 100,
-    'Flask5': 100,
-  }
+    'Class': 1,
+    'Experience': 100,
+    'Equipment': {
+        'HelmetId': 0,
+        'Ring1Id': 0,
+        'Ring2Id': 0,
+        'AmuletId': 0,
+        'ArmorId': 0,
+        'GlovesId': 0,
+        'ShoesId': 0,
+        'WeaponId': 0,
+        'OffHandId': 0,
+        'BeltId': 0,
+        'Flask1Id': 0,
+        'Flask2Id': 0,
+        'Flask3Id': 0,
+        'Flask4Id': 0,
+        'Flask5Id': 0
+    },
+    'Scrolls': [
+        123, 123312, 35123, 5123, 5123, 1231541, 123213
+    ]
 }

@@ -1,0 +1,12 @@
+[
+    {
+        Name:
+        Type:
+        Image:
+        Icon:
+        Model:
+        Texture:
+        Rarity:
+        Affixs: []
+    }
+]
