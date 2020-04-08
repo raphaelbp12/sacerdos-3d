@@ -11,6 +11,7 @@ namespace Scrds.Core
         [SerializeField] int lifePerLevel = 12;
         [SerializeField] int healthPoints = 100;
         [SerializeField] int totalDamage = 0;
+        [SerializeField] int monsterMaxHealth = 40;
         [SerializeField] Image healthBarContainerPrefab;
         [SerializeField] Image healthBarContainerInstantiated;
         [SerializeField] Transform healthBarPosition;
@@ -40,7 +41,12 @@ namespace Scrds.Core
 
         void Update()
         {
-            int totalHealth = CalculateMaxHealth();
+            int totalHealth = monsterMaxHealth;
+
+            if (gameObject.tag == "Player") {
+                totalHealth = CalculatePlayerMaxHealth();
+            }
+
             healthPoints = Mathf.FloorToInt(Mathf.Max(totalHealth - totalDamage, 0));
 
             healthBarRed.fillAmount = healthPoints*1f / totalHealth*1f;
@@ -58,7 +64,7 @@ namespace Scrds.Core
             }
         }
 
-        private int CalculateMaxHealth()
+        private int CalculatePlayerMaxHealth()
         {
             int playerLevel = statsController.playerLevel;
             int playerVitality = statsController.vitality;
