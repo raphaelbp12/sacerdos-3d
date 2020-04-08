@@ -8,15 +8,15 @@ public class StatsController : MonoBehaviour
     [SerializeField]
     float exp = 0;
     [SerializeField]
-    int playerLevel = 2;
+    public int playerLevel = 2;
     [SerializeField]
-    int dexterity = 0;
+    public int dexterity = 0;
     [SerializeField]
-    int vitality = 0;
+    public int vitality = 0;
     [SerializeField]
-    int strength = 0;
+    public int strength = 0;
     [SerializeField]
-    int intelligence = 0;
+    public int intelligence = 0;
     [SerializeField]
     int playerClass = 0;
     List<PlayerStatsCurve> playerStatsCurves = new List<PlayerStatsCurve>();

@@ -7,24 +7,27 @@ namespace Scrds.Core
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField] float healthPoints = 100f;
+        [SerializeField] int lifeBase = 38;
+        [SerializeField] int lifePerLevel = 12;
+        [SerializeField] int healthPoints = 100;
+        [SerializeField] int totalDamage = 0;
         [SerializeField] Image healthBarContainerPrefab;
         [SerializeField] Image healthBarContainerInstantiated;
         [SerializeField] Transform healthBarPosition;
-
-        float startingHealth;
         bool isDead = false;
         public Image healthBarRed;
 
+        [SerializeField]
+        StatsController statsController;
+
         private void Start() {
 
+            statsController = transform.gameObject.GetComponent<StatsController>();
             Color healthBarColor = Color.red;
 
             if (gameObject.tag == "Player") {
                 healthBarColor = Color.green;
             }
-
-            startingHealth = healthPoints;
 
             GameObject canvas = GameObject.FindWithTag("MainCanvas");
             healthBarContainerInstantiated = Instantiate(healthBarContainerPrefab, Vector3.zero, Quaternion.identity);
@@ -35,6 +38,19 @@ namespace Scrds.Core
             healthBarRed.GetComponent<Image>().color = healthBarColor;
         }
 
+        void Update()
+        {
+            int totalHealth = CalculateMaxHealth();
+            healthPoints = Mathf.FloorToInt(Mathf.Max(totalHealth - totalDamage, 0));
+
+            healthBarRed.fillAmount = healthPoints*1f / totalHealth*1f;
+
+            if (healthPoints == 0)
+            {
+                Die();
+            }
+        }
+
         private void LateUpdate() {
             if (healthBarContainerInstantiated) {
                 Vector3 healthPos = Camera.main.WorldToScreenPoint(healthBarPosition.position);
@@ -42,19 +58,20 @@ namespace Scrds.Core
             }
         }
 
+        private int CalculateMaxHealth()
+        {
+            int playerLevel = statsController.playerLevel;
+            int playerVitality = statsController.vitality;
+
+            return Mathf.FloorToInt(lifeBase + playerLevel * lifePerLevel + playerVitality/2);
+        }
+
         public bool IsDead() {
             return isDead;
         }
 
         public void TakeDamage(float damage) {
-            healthPoints = Mathf.Max(healthPoints - damage, 0);
-
-            healthBarRed.fillAmount = healthPoints / startingHealth;
-
-            if (healthPoints == 0)
-            {
-                Die();
-            }
+            totalDamage += Mathf.FloorToInt(damage);
         }
 
         private void Die()
