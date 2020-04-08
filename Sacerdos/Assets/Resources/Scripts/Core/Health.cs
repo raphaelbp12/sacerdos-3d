@@ -14,7 +14,8 @@ namespace Scrds.Core
         [SerializeField] int monsterMaxHealth = 40;
         [SerializeField] Image healthBarContainerPrefab;
         [SerializeField] Image healthBarContainerInstantiated;
-        [SerializeField] Transform healthBarPosition;
+        [SerializeField] 
+        public Transform healthBarPosition;
         bool isDead = false;
         public Image healthBarRed;
 

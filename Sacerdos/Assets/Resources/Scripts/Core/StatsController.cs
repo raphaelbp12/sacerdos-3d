@@ -8,7 +8,7 @@ public class StatsController : MonoBehaviour
     [SerializeField]
     float exp = 0;
     [SerializeField]
-    public int playerLevel = 2;
+    public int playerLevel = 100;
     [SerializeField]
     public int dexterity = 0;
     [SerializeField]

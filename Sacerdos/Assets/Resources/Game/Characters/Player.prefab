@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &320406044210979361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2759534207772293843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e922bf73010fd18008f41ddcd0fadfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exp: 0
+  playerLevel: 100
+  dexterity: 0
+  vitality: 0
+  strength: 0
+  intelligence: 0
+  playerClass: 0
 --- !u!114 &3783881948588900373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25,18 +44,6 @@ MonoBehaviour:
   - type: 3
     texture: {fileID: 2800000, guid: 44a99ee545fd8ba46a452b12c1f9378b, type: 3}
     hotspot: {x: 0, y: 0}
---- !u!114 &320406044210979361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2759534207772293843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e922bf73010fd18008f41ddcd0fadfaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5714826083650325038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67,7 +74,7 @@ PrefabInstance:
     - target: {fileID: 7778594842107701023, guid: f32750be9af27af468df412734af49f5,
         type: 3}
       propertyPath: healthPoints
-      value: 40
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8792569840009083948, guid: f32750be9af27af468df412734af49f5,
         type: 3}

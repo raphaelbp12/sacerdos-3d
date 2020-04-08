@@ -9,6 +9,9 @@ namespace Scrds.Combat
     public class Fighter : MonoBehaviour, IAction
     {
         [SerializeField] float weaponRange = 2f;
+        [SerializeField] float accuracyRating = 0f;
+        [SerializeField] float evasionRating = 0f;
+        [SerializeField] float blockRating = 0f;
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] float weaponDamage = 5f;
         Health target;
@@ -79,6 +82,7 @@ namespace Scrds.Combat
         void Hit() {
             if (target == null) return;
             target.TakeDamage(weaponDamage);
+            DamagePopup.Create(target.healthBarPosition, Mathf.FloorToInt(weaponDamage), false);
             StopAttack();
             target = null;
         }
