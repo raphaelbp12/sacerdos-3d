@@ -2,13 +2,16 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
+using Scrds.Classes;
 
 public class SkillButtonHandler : MonoBehaviour
 {
     private bool listening;
-    private string bind = "F1";
+    private string bind = "";
     private Text buttonText;
     private Button btn;
+
+    [SerializeField] public BindingsSlotsEnum slot = BindingsSlotsEnum.firstFlask;
 
     void Start()
     {
@@ -16,6 +19,11 @@ public class SkillButtonHandler : MonoBehaviour
         btn.onClick.AddListener(OnClick);
 
         buttonText = gameObject.GetComponentInChildren<Text>();
+
+        BindingsController bindingsController = GameObject.Find("MenuController").GetComponent<BindingsController>();
+        if (bindingsController != null && bindingsController.bindings != null && bindingsController.bindings.Count > 0) {
+            bind = bindingsController.bindings.FirstOrDefault(x => x.Value == slot).Key;
+        }
 
         buttonText.text = bind;
     }
@@ -28,8 +36,8 @@ public class SkillButtonHandler : MonoBehaviour
             if (e.isKey)
             {
                 BindingsController bindingsController = GameObject.Find("MenuController").GetComponent<BindingsController>();
-                Skill skill = bindingsController.bindings[bind];
-                bindingsController.bindings.Remove(bind);
+                string keyStored = bindingsController.bindings.FirstOrDefault(x => x.Value == slot).Key;
+                bindingsController.bindings.Remove(keyStored);
 
                 string key = e.keyCode.ToString();
                 Debug.Log(key);
@@ -38,7 +46,7 @@ public class SkillButtonHandler : MonoBehaviour
                 listening = false;
                 btn.enabled = true;
 
-                bindingsController.bindings.Add(key, skill);
+                bindingsController.bindings.Add(key, slot);
             }
         }
     }
