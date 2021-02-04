@@ -7,6 +7,7 @@ public class SkillBindingsMenu : MonoBehaviour
 
     [SerializeField] private GameObject pauseMenuUI;
     public bool GameIsPaused = false;
+    public bool menuIsOpen = false;
 
     private void Start()
     {
@@ -14,30 +15,20 @@ public class SkillBindingsMenu : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !GameIsPaused)
+        if (Input.GetKeyDown(KeyCode.Escape) && !menuIsOpen)
         {
-            Debug.Log("TESTE!");
-            PauseGame();
+            Debug.Log("open menu");
+            menuIsOpen = true;
+            pauseMenuUI.SetActive(true);
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Escape) && GameIsPaused)
+        if (Input.GetKeyDown(KeyCode.Escape) && menuIsOpen)
         {
-            Debug.Log("TESTE 2!");
-            ResumeGame();
+            Debug.Log("close menu");
+            menuIsOpen = false;
+            pauseMenuUI.SetActive(false);
             return;
         }
-    }
-    private void PauseGame()
-    {
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        GameIsPaused = true;
-    }
-    public void ResumeGame()
-    {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
     }
 
     public void QuitGame()
