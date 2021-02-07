@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Scrds.Classes;
+using Scrds.Core;
 
 public enum SkillsList {
     empty,
@@ -25,16 +26,11 @@ public class BindingsController : MonoBehaviour
 
     public Dictionary<string, BindingsSlotsEnum> bindings;
     [SerializeField] public int rotation = 0;
+    private string fileName = "keyBindings";
 
     public BindingsController()
     {
-        bindings = new Dictionary<string, BindingsSlotsEnum>();
-
-        bindings.Add("F1", BindingsSlotsEnum.firstFlask);
-        bindings.Add("F2", BindingsSlotsEnum.secondFlask);
-        bindings.Add("1", BindingsSlotsEnum.thirdFlask);
-        bindings.Add("2", BindingsSlotsEnum.fourthFlask);
-        bindings.Add("3", BindingsSlotsEnum.fifthFlask);
+        bindings = SaveFileManagement.LoadFile<Dictionary<string, BindingsSlotsEnum>>(fileName);
     }
 
     void Start()
@@ -44,8 +40,10 @@ public class BindingsController : MonoBehaviour
     void OnGUI()
     {
         Event e = Event.current;
-        if (e.isKey && e.rawType == EventType.KeyDown)
-        {
+        if (
+            (e.isKey && e.rawType == EventType.KeyDown) ||
+            (e.isMouse && e.rawType == EventType.MouseDown)
+        ) {
             string key = e.keyCode.ToString();
             if (bindings.ContainsKey(key))
             {

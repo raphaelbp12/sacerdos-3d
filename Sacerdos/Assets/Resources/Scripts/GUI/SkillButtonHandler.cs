@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Scrds.Classes;
+using Scrds.Core;
 
 public class SkillButtonHandler : MonoBehaviour
 {
@@ -12,6 +14,10 @@ public class SkillButtonHandler : MonoBehaviour
     private Button btn;
 
     [SerializeField] public BindingsSlotsEnum slot = BindingsSlotsEnum.firstFlask;
+
+    private string fileName = "keyBindings";
+
+    public Dictionary<string, BindingsSlotsEnum> savedBindings;
 
     void Start()
     {
@@ -26,6 +32,8 @@ public class SkillButtonHandler : MonoBehaviour
         }
 
         buttonText.text = bind;
+
+        // savedBindings = SaveFileManagement.LoadFile<Dictionary<string, BindingsSlotsEnum>>(fileName);
     }
 
     private void OnGUI()
@@ -33,13 +41,23 @@ public class SkillButtonHandler : MonoBehaviour
         if (listening)
         {
             Event e = Event.current;
-            if (e.isKey)
+            if (e.isKey && e.rawType == EventType.KeyDown)
             {
                 BindingsController bindingsController = GameObject.Find("MenuController").GetComponent<BindingsController>();
                 string keyStored = bindingsController.bindings.FirstOrDefault(x => x.Value == slot).Key;
-                bindingsController.bindings.Remove(keyStored);
+
+                if (keyStored != null)
+                {
+                    bindingsController.bindings.Remove(keyStored);
+                }                
 
                 string key = e.keyCode.ToString();
+
+                if (bindingsController.bindings.Any(x => x.Key == key))
+                {
+                    Debug.Log("key already exists");
+                    return;
+                }
                 Debug.Log(key);
                 bind = key;
                 buttonText.text = key;
@@ -47,6 +65,8 @@ public class SkillButtonHandler : MonoBehaviour
                 btn.enabled = true;
 
                 bindingsController.bindings.Add(key, slot);
+
+                SaveFileManagement.SaveFile<Dictionary<string, BindingsSlotsEnum>>(bindingsController.bindings, fileName);
             }
         }
     }
