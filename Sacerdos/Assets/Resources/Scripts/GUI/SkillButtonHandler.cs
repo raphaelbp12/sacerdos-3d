@@ -32,8 +32,6 @@ public class SkillButtonHandler : MonoBehaviour
         }
 
         buttonText.text = bind;
-
-        // savedBindings = SaveFileManagement.LoadFile<Dictionary<string, BindingsSlotsEnum>>(fileName);
     }
 
     private void OnGUI()
