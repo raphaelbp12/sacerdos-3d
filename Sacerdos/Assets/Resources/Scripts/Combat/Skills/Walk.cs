@@ -7,6 +7,7 @@ namespace Scrds.Combat
 {
     public class Walk: Skill
     {
+        public Vector3? mouseProjected;
         private string name = "Walk";
 
         private GameObject playerGameObject;
@@ -19,8 +20,10 @@ namespace Scrds.Combat
 
         public override void DoAction()
         {
+            if(this.mouseProjected == null) return;
             Debug.Log(this.name);
-            this.moverController.MoveTo(new Vector3(0, 0, 0));
+            Debug.Log(Input.mousePosition);
+            this.moverController.MoveTo(this.mouseProjected.Value);
         }
     }
 }
