@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeteoroDePegasusSkill: Skill
+namespace Scrds.Combat
 {
-    string name = "Meteoro de Pegasus";
-
-    public override void DoAction()
+    public class MeteoroDePegasusSkill: Skill
     {
-        Debug.Log(this.name);
+        string name = "Meteoro de Pegasus";
+
+        public override void DoAction()
+        {
+            Debug.Log(this.name);
+        }
     }
 }

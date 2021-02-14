@@ -15,13 +15,20 @@ namespace Scrds.Core
         public int height = 3;
         // Start is called before the first frame update
         private List<List<TileData>> tilesMatrix = new List<List<TileData>>();
+        private List<List<GameObject>> tilesGameObjectMatrix = new List<List<GameObject>>();
+        private List<List<int>> tilesMaskMatrix = new List<List<int>>();
         
         public NavMeshSurface surface;
 
         public GameObject playerPrefab;
         public GameObject enemyPrefab;
+        // public GameObject portalPrefab;
+        // public GameObject towerPrefab;
+        public GameObject tileTesterPrefab;
         public GameObject camera;
         public int numberOfEnemies;
+
+        private Vector3 towerPosition;
 
         public void Rebake()
         {
@@ -52,13 +59,56 @@ namespace Scrds.Core
                 Rebake();
             }
 
-            GameObject player = SpawnAtRandomPoint(playerPrefab);
+
+            // towerPosition = new Vector3(UnityEngine.Random.Range(0,35f*width), 0, UnityEngine.Random.Range(0, -35f*height));
+            towerPosition = new Vector3(0, 0, 0);
+
+            // GameObject towerGameObject = SpawnAtPoint(towerPrefab, towerPosition);
+            // towerPosition = towerGameObject.transform.position;
+
+            GameObject player = SpawnAtPoint(playerPrefab, towerPosition);
+
             FollowCamera followCamera = camera.GetComponent<FollowCamera>();
             followCamera.target = player.transform;
 
             for (int i = 0; i < numberOfEnemies; i++)
             {
-                SpawnAtRandomPoint(enemyPrefab);
+                bool pathFound = false;
+
+                while (!pathFound)
+                {
+                    Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(-17.5f,(35f*width-17.5f)), 0, UnityEngine.Random.Range(17.5f, (-35f*height+17.5f)));
+                    GameObject portalGameObject = SpawnAtPoint(enemyPrefab, randomPosition);
+                    NavMeshAgent portalNavMeshAgent = portalGameObject.GetComponent<NavMeshAgent>();
+
+                    if (!CalculateNewPath(portalNavMeshAgent, towerPosition))
+                    {
+                        // Vector3 pos = portalGameObject.transform.position;
+                        // int row = (int)Math.Round(pos.z/35);
+                        // int column = (int)Math.Round(pos.x/35);
+                        
+                        // if (tilesMaskMatrix[row][column] == 1) {
+                        //     tilesMaskMatrix[row][column] = 0;
+                        // }
+
+                        Destroy(portalGameObject);
+
+                    } else {
+                        pathFound = true;
+                    }
+                }
+            }
+        }
+
+        bool CalculateNewPath(NavMeshAgent spawnPosition, Vector3 targetPosition) {
+            NavMeshPath navMeshPath = new NavMeshPath();
+            spawnPosition.CalculatePath(targetPosition, navMeshPath);
+            Debug.Log("New path calculated");
+            if (navMeshPath.status != NavMeshPathStatus.PathComplete) {
+                return false;
+            }
+            else {
+                return true;
             }
         }
 
@@ -117,9 +167,8 @@ namespace Scrds.Core
             return null;
         }
 
-        GameObject SpawnAtRandomPoint(GameObject prefab)
+        GameObject SpawnAtPoint(GameObject prefab, Vector3 position)
         {
-            Vector3 position = new Vector3(UnityEngine.Random.Range(0,35f*width), 0, UnityEngine.Random.Range(0, -35f*height));
             NavMeshHit hit;
             NavMesh.SamplePosition(position, out hit, 100, 1);
             position = hit.position;

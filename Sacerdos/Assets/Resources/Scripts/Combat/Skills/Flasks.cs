@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flasks: Skill
+namespace Scrds.Combat
 {
-    string name = "Flask";
-
-    public Flasks() {
-        
-    }
-
-    public override void DoAction()
+    public class Flasks: Skill
     {
-        Debug.Log(this.name);
+        string name = "Flask";
+
+        public Flasks() {
+            
+        }
+
+        public override void DoAction()
+        {
+            Debug.Log(this.name);
+        }
     }
 }

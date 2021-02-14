@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7048450060347577548}
   - component: {fileID: 7048450060347577549}
   - component: {fileID: 7048450060347577538}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7048450061127016142}
   - component: {fileID: 6465621448279887481}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Empty Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,5 +123,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997e460b8c0864d75a983e3bb9055d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connections: 01000000000000000000000000000000
+  connections: 00000000000000000000000000000000
   rotation: 0
