@@ -17,6 +17,7 @@ namespace Scrds.Combat
         [SerializeField] private Transform pfArrow;
 
         private GameObject playerGameObject;
+        AttackBase attackBase;
         Walk walkSkill;
         FlameDash flamedashSkill;
         ThrowArrow throwArrowSkill;
@@ -30,6 +31,7 @@ namespace Scrds.Combat
 
         void Start() {
             this.playerGameObject = GameObject.FindGameObjectsWithTag("Player")[0];
+            this.attackBase = new AttackBase(this.playerGameObject);
             this.walkSkill = new Walk(this.playerGameObject);
             this.flamedashSkill = new FlameDash(this.playerGameObject);
             this.throwArrowSkill = new ThrowArrow(this.playerGameObject);
@@ -99,9 +101,10 @@ namespace Scrds.Combat
                     this.flamedashSkill.DoAction();
                     break;
                 case SkillsList.throwArrow:
+                    this.attackBase.mouseProjected = mouseProjected;
                     this.throwArrowSkill.mouseProjected = mouseProjected;
                     this.throwArrowSkill.pfArrow = pfArrow;
-                    this.throwArrowSkill.DoAction();
+                    this.attackBase.DoActionBeforeCallback(this.throwArrowSkill);
                     break;
                 default:
                     Debug.Log("Call default enum");

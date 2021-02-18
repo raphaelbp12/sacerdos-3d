@@ -5,6 +5,7 @@ using Scrds.Classes;
 
 public class StatsController : MonoBehaviour
 {
+    public float attackSpeed;
     [SerializeField]
     float exp = 0;
     [SerializeField]
@@ -25,6 +26,7 @@ public class StatsController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.attackSpeed = 2f;
         playerStatsCurves.AddRange(FileSystem.ParseJsonFile<List<PlayerStatsCurve>>("stats"));
         playerStatsByClasses.AddRange(FileSystem.ParseJsonFile<List<PlayerStatsByClass>>("stats_by_class"));
         playerStats = FileSystem.ParseJsonFile<PlayerStats>("player");

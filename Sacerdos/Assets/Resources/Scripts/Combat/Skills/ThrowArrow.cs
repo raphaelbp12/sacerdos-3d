@@ -24,7 +24,6 @@ namespace Scrds.Combat
 
         public override void DoAction()
         {
-            if(this.mouseProjected == null) return;
             Transform arrowTransform = Object.Instantiate(this.pfArrow, this.projectileSpawn.position, Quaternion.identity);
             Vector3 shootDir = (this.mouseProjected.Value - this.playerGameObject.transform.position).normalized;
             arrowTransform.GetComponent<ArrowScript>().Setup(shootDir);
