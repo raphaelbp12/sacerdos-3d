@@ -10,13 +10,16 @@ namespace Scrds.Combat
         walk,
         flameDash,
         toxicRain,
-        causticArrow
+        throwArrow
     }
     public class SkillCaller : MonoBehaviour
     {
+        [SerializeField] private Transform pfArrow;
 
         private GameObject playerGameObject;
         Walk walkSkill;
+        FlameDash flamedashSkill;
+        ThrowArrow throwArrowSkill;
 
         private float m_DistanceZ = 8f;
 
@@ -28,6 +31,8 @@ namespace Scrds.Combat
         void Start() {
             this.playerGameObject = GameObject.FindGameObjectsWithTag("Player")[0];
             this.walkSkill = new Walk(this.playerGameObject);
+            this.flamedashSkill = new FlameDash(this.playerGameObject);
+            this.throwArrowSkill = new ThrowArrow(this.playerGameObject);
 
             //This is how far away from the Camera the plane is placed
             this.m_DistanceFromCamera = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - this.m_DistanceZ, Camera.main.transform.position.z);
@@ -37,9 +42,9 @@ namespace Scrds.Combat
         }
         private List<SkillsList> skills = new List<SkillsList>(){
             SkillsList.walk,
-            SkillsList.flameDash,
-            SkillsList.flameDash,
-            SkillsList.flameDash,
+            SkillsList.throwArrow,
+            SkillsList.throwArrow,
+            SkillsList.throwArrow,
             SkillsList.flameDash,
             SkillsList.flameDash,
             SkillsList.flameDash,
@@ -90,7 +95,13 @@ namespace Scrds.Combat
                     this.walkSkill.DoAction();
                     break;
                 case SkillsList.flameDash:
-                    Debug.Log("Call flameDash skill");
+                    this.flamedashSkill.mouseProjected = mouseProjected;
+                    this.flamedashSkill.DoAction();
+                    break;
+                case SkillsList.throwArrow:
+                    this.throwArrowSkill.mouseProjected = mouseProjected;
+                    this.throwArrowSkill.pfArrow = pfArrow;
+                    this.throwArrowSkill.DoAction();
                     break;
                 default:
                     Debug.Log("Call default enum");

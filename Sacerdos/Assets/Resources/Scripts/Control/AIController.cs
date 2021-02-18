@@ -8,7 +8,7 @@ namespace Scrds.Control
 {
     public class AIController : MonoBehaviour
     {
-        enum TagType
+        public enum TagType
         {
             Player,
             Enemy,
@@ -16,7 +16,7 @@ namespace Scrds.Control
 
         [SerializeField] float chaseDistance = 5f;
 
-        [SerializeField] TagType targetTagType = TagType.Player;
+        [SerializeField] public TagType targetTagType = TagType.Player;
 
         string targetTagString;
         Health health;

@@ -23,7 +23,7 @@ namespace Scrds.Combat
             if(this.mouseProjected == null) return;
             Debug.Log(this.name);
             Debug.Log(Input.mousePosition);
-            this.moverController.MoveTo(this.mouseProjected.Value);
+            this.moverController.MoveTo(this.mouseProjected.Value, 0.0f);
         }
     }
 }

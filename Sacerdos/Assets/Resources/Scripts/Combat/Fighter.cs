@@ -14,6 +14,7 @@ namespace Scrds.Combat
         [SerializeField] float blockRating = 0f;
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] float weaponDamage = 5f;
+        [SerializeField] public Transform projectileSpawn;
         Health target;
         float timeSinceLastAttack = Mathf.Infinity;
         private void Update()

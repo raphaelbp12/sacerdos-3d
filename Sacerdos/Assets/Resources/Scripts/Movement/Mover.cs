@@ -12,6 +12,8 @@ namespace Scrds.Movement
         [SerializeField] Transform target;
         NavMeshAgent navMeshAgent;
         Health health;
+
+        float baseSpeed = 5.0f;
         private void Start() {
             navMeshAgent = GetComponent<NavMeshAgent>();
             health = GetComponent<Health>();
@@ -35,9 +37,16 @@ namespace Scrds.Movement
             MoveTo(destination);
         }
 
-        public void MoveTo(Vector3 destination)
+        public void MoveTo(Vector3 destination, float movSpeedIncrease = 0f)
         {
+            GetComponent<NavMeshAgent>().speed = (1.0f + movSpeedIncrease) * baseSpeed;
             navMeshAgent.destination = destination;
+            navMeshAgent.isStopped = false;
+        }
+
+        public void Move(Vector3 offset)
+        {
+            GetComponent<NavMeshAgent>().Move(offset);
             navMeshAgent.isStopped = false;
         }
 
