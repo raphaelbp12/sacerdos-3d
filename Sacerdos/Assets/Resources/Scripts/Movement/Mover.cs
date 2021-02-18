@@ -14,7 +14,12 @@ namespace Scrds.Movement
         Health health;
 
         float baseSpeed = 5.0f;
+        public float rotationSpeed = 10f;
+        public Vector3 rotateTarget;
+
+        private bool isMoving;
         private void Start() {
+            rotateTarget = Vector3.forward;
             navMeshAgent = GetComponent<NavMeshAgent>();
             health = GetComponent<Health>();
         }
@@ -22,6 +27,10 @@ namespace Scrds.Movement
         {
             navMeshAgent.enabled = !health.IsDead();
             UpdateAnimator();
+
+            if (this.navMeshAgent.isStopped) {
+                this.RotateTowards(rotateTarget);
+            }
         }
 
         private void UpdateAnimator()
@@ -39,9 +48,19 @@ namespace Scrds.Movement
 
         public void MoveTo(Vector3 destination, float movSpeedIncrease = 0f)
         {
+            // this.setRotateTarget(destination);
             GetComponent<NavMeshAgent>().speed = (1.0f + movSpeedIncrease) * baseSpeed;
             navMeshAgent.destination = destination;
             navMeshAgent.isStopped = false;
+        }
+
+        public void setRotateTarget (Vector3 targetPosition) {
+            this.rotateTarget = targetPosition;
+        }
+
+        private void RotateTowards (Vector3 direction) {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
 
         public void Move(Vector3 offset)

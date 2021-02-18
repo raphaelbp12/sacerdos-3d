@@ -31,10 +31,12 @@ namespace Scrds.Combat
             if (Time.time < this.nextAttackTime) {
                 return;
             }
+            this.moverController.Cancel();
+            Vector3 attackDir = (this.mouseProjected.Value - this.playerGameObject.transform.position).normalized;
+            this.moverController.setRotateTarget(attackDir.normalized);
             this.numAttacks += 1;
             this.nextAttackTime = Time.time + this.fireRate;
             Debug.Log(this.name);
-            this.moverController.Cancel();
             if(this.mouseProjected == null) return;
             callback.DoAction();
         }
