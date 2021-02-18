@@ -28,7 +28,7 @@ namespace Scrds.Movement
             navMeshAgent.enabled = !health.IsDead();
             UpdateAnimator();
 
-            if (this.navMeshAgent.isStopped) {
+            if (!this.isMoving) {
                 this.RotateTowards(rotateTarget);
             }
         }
@@ -48,6 +48,7 @@ namespace Scrds.Movement
 
         public void MoveTo(Vector3 destination, float movSpeedIncrease = 0f)
         {
+            this.isMoving = true;
             // this.setRotateTarget(destination);
             GetComponent<NavMeshAgent>().speed = (1.0f + movSpeedIncrease) * baseSpeed;
             navMeshAgent.destination = destination;
@@ -65,11 +66,13 @@ namespace Scrds.Movement
 
         public void Move(Vector3 offset)
         {
+            this.isMoving = true;
             GetComponent<NavMeshAgent>().Move(offset);
             navMeshAgent.isStopped = false;
         }
 
         public void Cancel() {
+            this.isMoving = false;
             navMeshAgent.isStopped = true;
         }
     }
