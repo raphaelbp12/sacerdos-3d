@@ -7,7 +7,7 @@
         {
             "name": "Unity Editor",
             "type": "unity",
-            "path": "/c:/@Games/sacerdos/Library/EditorInstance.json",
+            "path": "/home/rbp/@Games/sacerdos/Sacerdos/Library/EditorInstance.json",
             "request": "launch"
         },
         {
