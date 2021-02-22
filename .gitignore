@@ -5,6 +5,8 @@
 [Bb]uilds/
 [Bb]uild_Data/
 Assets/AssetStoreTools*
+Logs/
+Recordings
 
 # Visual Studio cache directory
 .vs/
@@ -24,10 +26,23 @@ ExportedObj/
 *.svd
 *.pdb
 *.opendb
+.vs/*
+.vscode*
 
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
