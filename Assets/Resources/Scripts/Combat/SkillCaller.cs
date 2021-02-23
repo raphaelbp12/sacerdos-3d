@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Scrds.Combat
 {
@@ -26,6 +27,7 @@ namespace Scrds.Combat
 
         Plane m_Plane;
         Vector3 m_DistanceFromCamera;
+        private List<Skill> skills = new List<Skill>(){};
         public SkillCaller() {
         }
 
@@ -41,17 +43,9 @@ namespace Scrds.Combat
 
             //Create a new plane with normal (0,0,1) at the position away from the camera you define in the Inspector. This is the plane that you can click so make sure it is reachable.
             this.m_Plane = new Plane(Vector3.forward, this.m_DistanceFromCamera);
+
+            this.skills.Add(this.walkSkill);
         }
-        private List<SkillsList> skills = new List<SkillsList>(){
-            SkillsList.walk,
-            SkillsList.throwArrow,
-            SkillsList.throwArrow,
-            SkillsList.throwArrow,
-            SkillsList.flameDash,
-            SkillsList.flameDash,
-            SkillsList.flameDash,
-            SkillsList.flameDash
-        };
 
         public Vector3? getMouseProjectedPosition()
         {
@@ -85,31 +79,39 @@ namespace Scrds.Combat
             }
 
             Vector3? mouseProjected = getMouseProjectedPosition();
-            SkillsList skillType = skills[skillIndex];
+            Skill skillType = skills[skillIndex];
 
             switch (skillType)
             {
-                case SkillsList.empty:
-                    Debug.Log("Call empty skill");
-                    break;
-                case SkillsList.walk:
-                    this.walkSkill.mouseProjected = mouseProjected;
-                    this.walkSkill.DoAction();
-                    break;
-                case SkillsList.flameDash:
-                    this.flamedashSkill.mouseProjected = mouseProjected;
-                    this.flamedashSkill.DoAction();
-                    break;
-                case SkillsList.throwArrow:
-                    this.attackBase.mouseProjected = mouseProjected;
-                    this.throwArrowSkill.mouseProjected = mouseProjected;
-                    this.throwArrowSkill.pfArrow = pfArrow;
-                    this.attackBase.DoActionBeforeCallback(this.throwArrowSkill);
-                    break;
+                // case SkillsList.empty:
+                //     Debug.Log("Call empty skill");
+                //     break;
+                // case SkillsList.walk:
+                //     this.walkSkill.mouseProjected = mouseProjected;
+                //     this.walkSkill.DoAction();
+                //     break;
+                // case SkillsList.flameDash:
+                //     this.flamedashSkill.mouseProjected = mouseProjected;
+                //     this.flamedashSkill.DoAction();
+                //     break;
+                // case SkillsList.throwArrow:
+                //     this.attackBase.mouseProjected = mouseProjected;
+                //     this.throwArrowSkill.mouseProjected = mouseProjected;
+                //     this.throwArrowSkill.pfArrow = pfArrow;
+                //     this.attackBase.DoActionBeforeCallback(this.throwArrowSkill);
+                //     break;
                 default:
                     Debug.Log("Call default enum");
                     break;
             }
+        }
+
+        public void Skill1(InputAction.CallbackContext ctx)
+        {
+            Debug.Log("Skill1 called");
+
+            Vector3? mouseProjected = getMouseProjectedPosition();
+            this.skills[0].DoAction(mouseProjected.Value);
         }
     }
 }

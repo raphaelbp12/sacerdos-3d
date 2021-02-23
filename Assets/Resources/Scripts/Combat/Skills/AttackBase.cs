@@ -38,7 +38,7 @@ namespace Scrds.Combat
             this.nextAttackTime = Time.time + this.fireRate;
             Debug.Log(this.name);
             if(this.mouseProjected == null) return;
-            callback.DoAction();
+            callback.DoAction(new Vector3());
         }
     }
 }

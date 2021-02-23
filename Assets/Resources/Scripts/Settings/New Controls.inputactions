@@ -1,0 +1,33 @@
+{
+    "name": "New Controls",
+    "maps": [
+        {
+            "name": "New action map",
+            "id": "1701f431-5e0d-46c6-bc45-753c898c5925",
+            "actions": [
+                {
+                    "name": "Skill 1",
+                    "type": "Button",
+                    "id": "4719cf86-7cbf-4acd-8c84-96ca9bc55918",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold,Press(behavior=2)"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e7f6a532-3e96-45ee-a8ef-8d4cf7ba517f",
+                    "path": "<Keyboard>/#(Q)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill 1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

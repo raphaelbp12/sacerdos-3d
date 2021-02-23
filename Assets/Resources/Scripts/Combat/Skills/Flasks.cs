@@ -12,7 +12,7 @@ namespace Scrds.Combat
             
         }
 
-        public override void DoAction()
+        public override void DoAction(Vector3 targetWorldPosition)
         {
             Debug.Log(this.name);
         }

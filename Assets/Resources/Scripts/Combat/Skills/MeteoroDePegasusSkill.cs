@@ -8,7 +8,7 @@ namespace Scrds.Combat
     {
         string name = "Meteoro de Pegasus";
 
-        public override void DoAction()
+        public override void DoAction(Vector3 targetWorldPosition)
         {
             Debug.Log(this.name);
         }

@@ -18,7 +18,7 @@ namespace Scrds.Combat
             this.moverController = playerGameObject.GetComponent<Mover>();
         }
 
-        public override void DoAction()
+        public override void DoAction(Vector3 targetWorldPosition)
         {
             if(this.mouseProjected == null) return;
             Debug.Log(this.name);

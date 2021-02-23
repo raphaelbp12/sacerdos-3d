@@ -37,40 +37,40 @@ namespace Scrds.Control
 
         void Update()
         {
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-            {
-                SetCursor(CursorType.GUI);
-                return;
-            }
+            // if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            // {
+            //     SetCursor(CursorType.GUI);
+            //     return;
+            // }
 
-            if (health.IsDead()) {
-                SetCursor(CursorType.None);
-                return;
-            }
+            // if (health.IsDead()) {
+            //     SetCursor(CursorType.None);
+            //     return;
+            // }
 
-            bool isMouse0Pressed = Input.GetMouseButton(0);
+            // bool isMouse0Pressed = Input.GetMouseButton(0);
 
-            if (!isMouse0Pressed) {
-                mousePressedWhileAttacking = false;
-            }
+            // if (!isMouse0Pressed) {
+            //     mousePressedWhileAttacking = false;
+            // }
 
-            if (isMouse0Pressed && mousePressedWhileAttacking) {
-                InteractWithCombat(combatTarget);
-                return;
-            }
-            combatTarget = checkCombatHover();
-            if(combatTarget != null) {
-                if (isMouse0Pressed) InteractWithCombat(combatTarget);
-                return;
-            }
+            // if (isMouse0Pressed && mousePressedWhileAttacking) {
+            //     InteractWithCombat(combatTarget);
+            //     return;
+            // }
+            // combatTarget = checkCombatHover();
+            // if(combatTarget != null) {
+            //     if (isMouse0Pressed) InteractWithCombat(combatTarget);
+            //     return;
+            // }
 
-            RaycastHit? movDestination = checkMovementHover();
-            if(movDestination != null) {
-                if (isMouse0Pressed) InteractWithMovement(movDestination);
-                return;
-            }
+            // RaycastHit? movDestination = checkMovementHover();
+            // if(movDestination != null) {
+            //     if (isMouse0Pressed) InteractWithMovement(movDestination);
+            //     return;
+            // }
 
-            SetCursor(CursorType.None);
+            // SetCursor(CursorType.None);
         }
 
         private CombatTarget checkCombatHover() {

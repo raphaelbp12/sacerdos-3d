@@ -22,7 +22,7 @@ namespace Scrds.Combat
             this.projectileSpawn = playerGameObject.GetComponent<Fighter>().projectileSpawn;
         }
 
-        public override void DoAction()
+        public override void DoAction(Vector3 targetWorldPosition)
         {
             Transform arrowTransform = Object.Instantiate(this.pfArrow, this.projectileSpawn.position, Quaternion.identity);
             Vector3 shootDir = (this.mouseProjected.Value - this.playerGameObject.transform.position).normalized;

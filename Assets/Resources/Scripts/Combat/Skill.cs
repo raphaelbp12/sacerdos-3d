@@ -6,6 +6,6 @@ namespace Scrds.Combat
 {
     public abstract class Skill
     {
-        public abstract void DoAction();
+        public abstract void DoAction(Vector3 targetWorldPosition);
     }
 }
