@@ -18,7 +18,8 @@ namespace Scrds.Control
         }
 
         [System.Serializable]
-        struct CursorMapping {
+        struct CursorMapping
+        {
             public CursorType type;
             public Texture2D texture;
             public Vector2 hotspot;
@@ -31,14 +32,14 @@ namespace Scrds.Control
 
         Health health;
 
-        private void Start() {
+        private void Start()
+        {
             health = GetComponent<Health>();
         }
 
         void Update()
         {
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-            {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
                 SetCursor(CursorType.GUI);
                 return;
             }
@@ -59,13 +60,13 @@ namespace Scrds.Control
                 return;
             }
             combatTarget = checkCombatHover();
-            if(combatTarget != null) {
+            if (combatTarget != null) {
                 if (isMouse0Pressed) InteractWithCombat(combatTarget);
                 return;
             }
 
             RaycastHit? movDestination = checkMovementHover();
-            if(movDestination != null) {
+            if (movDestination != null) {
                 if (isMouse0Pressed) InteractWithMovement(movDestination);
                 return;
             }
@@ -73,10 +74,10 @@ namespace Scrds.Control
             SetCursor(CursorType.None);
         }
 
-        private CombatTarget checkCombatHover() {
+        private CombatTarget checkCombatHover()
+        {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
-            foreach (RaycastHit hit in hits)
-            {
+            foreach (RaycastHit hit in hits) {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
                 if (target == null) continue;
                 if (target.tag == "Player") continue;
@@ -100,12 +101,12 @@ namespace Scrds.Control
             GetComponent<Fighter>().Attack(target.gameObject);
         }
 
-        private RaycastHit? checkMovementHover() {
+        private RaycastHit? checkMovementHover()
+        {
             RaycastHit hit;
             bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
 
-            if (hasHit)
-            {
+            if (hasHit) {
                 SetCursor(CursorType.Movement);
                 return hit;
             }
@@ -119,14 +120,15 @@ namespace Scrds.Control
             }
         }
 
-        private void SetCursor(CursorType type) {
+        private void SetCursor(CursorType type)
+        {
             CursorMapping mapping = GetCursorMapping(type);
             Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
         }
 
-        private CursorMapping GetCursorMapping(CursorType type) {
-            foreach (CursorMapping mapping in cursorMappings)
-            {
+        private CursorMapping GetCursorMapping(CursorType type)
+        {
+            foreach (CursorMapping mapping in cursorMappings) {
                 if (mapping.type == type) {
                     return mapping;
                 }
