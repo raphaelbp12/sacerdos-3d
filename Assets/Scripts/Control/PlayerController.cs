@@ -4,6 +4,7 @@ using UnityEngine;
 using Scrds.Movement;
 using Scrds.Combat;
 using Scrds.Core;
+using UnityEngine.InputSystem;
 
 namespace Scrds.Control
 {
@@ -49,7 +50,7 @@ namespace Scrds.Control
                 return;
             }
 
-            bool isMouse0Pressed = Input.GetMouseButton(0);
+            bool isMouse0Pressed = Mouse.current.leftButton.isPressed;
 
             if (!isMouse0Pressed) {
                 mousePressedWhileAttacking = false;
@@ -138,7 +139,7 @@ namespace Scrds.Control
 
         private static Ray GetMouseRay()
         {
-            return Camera.main.ScreenPointToRay(Input.mousePosition);
+            return Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         }
     }
 }
