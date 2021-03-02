@@ -21,8 +21,6 @@ namespace Scrds.Combat
         public override void DoAction()
         {
             if (this.mouseProjected == null) return;
-            Debug.Log(this.name);
-            Debug.Log(Mouse.current.position.ReadValue());
             this.moverController.Move((new Vector3(0, 0, 1)) * Time.deltaTime * 10.0f);
         }
     }
