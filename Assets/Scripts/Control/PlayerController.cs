@@ -45,12 +45,13 @@ namespace Scrds.Control
         void Update()
         {
             UpdateCursor(_lastMousePosition);
-            OnMouseMove(_lastMousePosition);
 
             if (combatTarget) {
-                InteractWithCombat(combatTarget);
+                TryAttacking(combatTarget);
+                return;
             }
 
+            UpdateMovementTarget(_lastMousePosition);
             if (_lastMovementTarget != null) {
                 Move(_lastMovementTarget.Value);
             }
@@ -96,7 +97,7 @@ namespace Scrds.Control
             return null;
         }
 
-        private void InteractWithCombat(CombatTarget target)
+        private void TryAttacking(CombatTarget target)
         {
             Health targetHealth = target.gameObject.GetComponent<Health>();
             if (targetHealth.IsDead()) {
@@ -133,7 +134,7 @@ namespace Scrds.Control
             }
         }
 
-        private void OnMouseMove(Vector2 mousePosition)
+        private void UpdateMovementTarget(Vector2 mousePosition)
         {
             if (combatTarget)
                 return;
