@@ -8,7 +8,6 @@ namespace Scrds.Combat
     {
         public Transform pfArrow;
         public Vector3? mouseProjected;
-        private string name = "ThrowArrow";
 
         private GameObject playerGameObject;
 
