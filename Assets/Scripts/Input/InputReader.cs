@@ -81,6 +81,5 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
 
     public void OnToggleMenu(InputAction.CallbackContext context)
     {
-        throw new NotImplementedException();
     }
 }
