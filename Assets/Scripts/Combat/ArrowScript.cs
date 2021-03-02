@@ -35,7 +35,7 @@ public class ArrowScript : MonoBehaviour
         AIController aIController = collider.GetComponent<AIController>();
         if (target != null && aIController != null && aIController.targetTagType == AIController.TagType.Player) {
             Health health = target.GetComponent<Health>();
-            float damage = 40f;
+            int damage = 40;
             if (health.IsDead()) return;
             health.TakeDamage(damage);
             DamagePopup.Create(health.healthBarPosition, Mathf.FloorToInt(damage), false);

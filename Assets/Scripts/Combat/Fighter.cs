@@ -13,7 +13,7 @@ namespace Scrds.Combat
         [SerializeField] float evasionRating = 0f;
         [SerializeField] float blockRating = 0f;
         [SerializeField] float timeBetweenAttacks = 1f;
-        [SerializeField] float weaponDamage = 5f;
+        [SerializeField] int weaponDamage = 5;
         [SerializeField] public Transform projectileSpawn;
         Health target;
         float timeSinceLastAttack = Mathf.Infinity;
@@ -24,11 +24,9 @@ namespace Scrds.Combat
             if (target == null) return;
             if (target.IsDead()) return;
 
-            if (target != null && !IsInRange())
-            {
+            if (target != null && !IsInRange()) {
                 GetComponent<Mover>().MoveTo(target.transform.position);
-            } else
-            {
+            } else {
                 GetComponent<Mover>().Cancel();
                 AttackBehaviour();
             }
@@ -37,8 +35,7 @@ namespace Scrds.Combat
         private void AttackBehaviour()
         {
             transform.LookAt(target.transform);
-            if (timeSinceLastAttack > timeBetweenAttacks)
-            {
+            if (timeSinceLastAttack > timeBetweenAttacks) {
                 TriggetAttack();
                 timeSinceLastAttack = 0;
             }
@@ -55,7 +52,8 @@ namespace Scrds.Combat
             return Vector3.Distance(target.transform.position, transform.position) < weaponRange;
         }
 
-        public bool IsTargetAlive(GameObject combatTarget){
+        public bool IsTargetAlive(GameObject combatTarget)
+        {
             if (combatTarget == null) return false;
             Health targetToTest = combatTarget.GetComponent<Health>();
             return targetToTest != null && !targetToTest.IsDead();
@@ -80,7 +78,8 @@ namespace Scrds.Combat
             GetComponent<Animator>().SetTrigger("stopAttack");
         }
 
-        void Hit() {
+        void Hit()
+        {
             if (target == null) return;
             target.TakeDamage(weaponDamage);
             DamagePopup.Create(target.healthBarPosition, Mathf.FloorToInt(weaponDamage), false);
