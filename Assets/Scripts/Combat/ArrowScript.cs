@@ -11,13 +11,13 @@ public class ArrowScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void Setup(Vector3 shootDir)
     {
@@ -29,8 +29,9 @@ public class ArrowScript : MonoBehaviour
         Destroy(gameObject, 5f);
     }
 
-    private void OnTriggerEnter(Collider collider) {
-        CombatTarget target = collider.GetComponent<CombatTarget>();
+    private void OnTriggerEnter(Collider collider)
+    {
+        Health target = collider.GetComponent<Health>();
         AIController aIController = collider.GetComponent<AIController>();
         if (target != null && aIController != null && aIController.targetTagType == AIController.TagType.Player) {
             Health health = target.GetComponent<Health>();

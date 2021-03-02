@@ -8,7 +8,7 @@ namespace Scrds.Control
 {
     public class PlayerController : MonoBehaviour
     {
-        private CombatTarget combatTarget;
+        private Health combatTarget;
 
         [SerializeField] CursorMapping[] cursorMappings = null;
         CursorManager _cursorManager;
@@ -82,11 +82,11 @@ namespace Scrds.Control
             _cursorManager.SetDefaultCursor();
         }
 
-        private CombatTarget CheckCombatHover(Vector2 mousePosition)
+        private Health CheckCombatHover(Vector2 mousePosition)
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay(mousePosition));
             foreach (RaycastHit hit in hits) {
-                CombatTarget target = hit.transform.GetComponent<CombatTarget>();
+                Health target = hit.transform.GetComponent<Health>();
                 if (target == null) continue;
                 if (target.CompareTag("Player")) continue;
 
@@ -97,7 +97,7 @@ namespace Scrds.Control
             return null;
         }
 
-        private void TryAttacking(CombatTarget target)
+        private void TryAttacking(Health target)
         {
             Health targetHealth = target.gameObject.GetComponent<Health>();
             if (targetHealth.IsDead()) {
