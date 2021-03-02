@@ -7,8 +7,6 @@ public class StatsController : MonoBehaviour
 {
     public float attackSpeed;
     [SerializeField]
-    float exp = 0;
-    [SerializeField]
     public int playerLevel = 100;
     [SerializeField]
     public int dexterity = 0;
@@ -22,16 +20,13 @@ public class StatsController : MonoBehaviour
     int playerClass = 0;
     List<PlayerStatsCurve> playerStatsCurves = new List<PlayerStatsCurve>();
     List<PlayerStatsByClass> playerStatsByClasses = new List<PlayerStatsByClass>();
-    PlayerStats playerStats = new PlayerStats();
+
     // Start is called before the first frame update
     void Start()
     {
         this.attackSpeed = 2f;
         playerStatsCurves.AddRange(FileSystem.ParseJsonFile<List<PlayerStatsCurve>>("stats"));
         playerStatsByClasses.AddRange(FileSystem.ParseJsonFile<List<PlayerStatsByClass>>("stats_by_class"));
-        playerStats = FileSystem.ParseJsonFile<PlayerStats>("player");
-        playerClass = playerStats.Class;
-        exp = playerStats.Experience;
     }
 
     // Update is called once per frame
@@ -49,8 +44,7 @@ public class StatsController : MonoBehaviour
         PlayerStatsByClass playerStatsByClass = playerStatsByClasses[playerClass];
         statsCurve = playerStatsCurves[0];
 
-        switch (attributeName)
-        {
+        switch (attributeName) {
             case PlayerStatsByClassEnum.dexterity:
                 statsCurve = playerStatsCurves[playerStatsByClass.dexterity];
                 break;
