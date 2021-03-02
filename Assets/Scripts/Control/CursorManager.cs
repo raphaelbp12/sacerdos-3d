@@ -23,6 +23,8 @@ namespace Scrds.Control
     {
         IDictionary<CursorType, CursorMapping> _cursors = new Dictionary<CursorType, CursorMapping>();
         CursorMapping _default;
+        CursorType _currentCursorType;
+
         public CursorManager(IList<CursorMapping> cursors)
         {
             foreach (CursorMapping cursor in cursors) {
@@ -34,10 +36,22 @@ namespace Scrds.Control
             } else {
                 _default = new CursorMapping();
             }
+
+            SetCursor(CursorType.None);
+        }
+
+        public void SetDefaultCursor()
+        {
+            SetCursor(CursorType.None);
         }
 
         public void SetCursor(CursorType type)
         {
+            if (_currentCursorType == type)
+                return;
+
+            _currentCursorType = type;
+
             if (_cursors.TryGetValue(type, out CursorMapping cursor)) {
                 Cursor.SetCursor(cursor.texture, cursor.hotspot, CursorMode.Auto);
             } else {
