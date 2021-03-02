@@ -1,144 +1,168 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Scrds.Movement;
 using Scrds.Combat;
 using Scrds.Core;
+using UnityEngine.InputSystem;
 
 namespace Scrds.Control
 {
     public class PlayerController : MonoBehaviour
     {
-        enum CursorType
-        {
-            None,
-            Movement,
-            Combat,
-            GUI
-        }
-
-        [System.Serializable]
-        struct CursorMapping
-        {
-            public CursorType type;
-            public Texture2D texture;
-            public Vector2 hotspot;
-        }
-
-        private bool mousePressedWhileAttacking = false;
         private CombatTarget combatTarget;
 
         [SerializeField] CursorMapping[] cursorMappings = null;
+        CursorManager _cursorManager;
+
+        [SerializeField] InputReader _inputReader = default;
+        private Vector3? _lastMovementTarget = null;
+
+        private bool _interacting = false;
 
         Health health;
+
+        private Vector2 _lastMousePosition;
 
         private void Start()
         {
             health = GetComponent<Health>();
+            _cursorManager = new CursorManager(cursorMappings);
+        }
+
+        void OnEnable()
+        {
+            _inputReader.MouseInteractionEvent += ProcessInteraction;
+            _inputReader.MouseMoveEvent += OnMousePosition;
+            _inputReader.CancelMouseInteractionEvent += ClearTarget;
+        }
+
+        void OnDisable()
+        {
+            _inputReader.MouseInteractionEvent -= ProcessInteraction;
+            _inputReader.MouseMoveEvent -= OnMousePosition;
+            _inputReader.CancelMouseInteractionEvent -= ClearTarget;
         }
 
         void Update()
         {
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
-                SetCursor(CursorType.GUI);
+            UpdateCursor(_lastMousePosition);
+
+            if (combatTarget) {
+                TryAttacking(combatTarget);
                 return;
             }
 
-            if (health.IsDead()) {
-                SetCursor(CursorType.None);
-                return;
+            UpdateMovementTarget(_lastMousePosition);
+            if (_lastMovementTarget != null) {
+                Move(_lastMovementTarget.Value);
             }
-
-            bool isMouse0Pressed = Input.GetMouseButton(0);
-
-            if (!isMouse0Pressed) {
-                mousePressedWhileAttacking = false;
-            }
-
-            if (isMouse0Pressed && mousePressedWhileAttacking) {
-                InteractWithCombat(combatTarget);
-                return;
-            }
-            combatTarget = checkCombatHover();
-            if (combatTarget != null) {
-                if (isMouse0Pressed) InteractWithCombat(combatTarget);
-                return;
-            }
-
-            RaycastHit? movDestination = checkMovementHover();
-            if (movDestination != null) {
-                if (isMouse0Pressed) InteractWithMovement(movDestination);
-                return;
-            }
-
-            SetCursor(CursorType.None);
         }
 
-        private CombatTarget checkCombatHover()
+        private void OnMousePosition(Vector2 position)
         {
-            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            _lastMousePosition = position;
+        }
+
+        private void UpdateCursor(Vector2 mousePosition)
+        {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
+                _cursorManager.SetCursor(CursorType.GUI);
+                return;
+            }
+
+            if (combatTarget || CheckCombatHover(mousePosition) != null) {
+                _cursorManager.SetCursor(CursorType.Combat);
+                return;
+            }
+
+            if (CheckMovementHover(mousePosition) != null) {
+                _cursorManager.SetCursor(CursorType.Movement);
+                return;
+            }
+
+            _cursorManager.SetDefaultCursor();
+        }
+
+        private CombatTarget CheckCombatHover(Vector2 mousePosition)
+        {
+            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay(mousePosition));
             foreach (RaycastHit hit in hits) {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
                 if (target == null) continue;
-                if (target.tag == "Player") continue;
+                if (target.CompareTag("Player")) continue;
 
                 if (!GetComponent<Fighter>().IsTargetAlive(target.gameObject)) continue;
 
-                SetCursor(CursorType.Combat);
                 return target;
             }
             return null;
         }
 
-        private void InteractWithCombat(CombatTarget target)
+        private void TryAttacking(CombatTarget target)
         {
             Health targetHealth = target.gameObject.GetComponent<Health>();
             if (targetHealth.IsDead()) {
-                mousePressedWhileAttacking = false;
                 return;
             }
-            mousePressedWhileAttacking = true;
             GetComponent<Fighter>().Attack(target.gameObject);
         }
 
-        private RaycastHit? checkMovementHover()
+        private RaycastHit? CheckMovementHover(Vector2 mousePosition)
         {
             RaycastHit hit;
-            bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
+            bool hasHit = Physics.Raycast(GetMouseRay(mousePosition), out hit);
 
             if (hasHit) {
-                SetCursor(CursorType.Movement);
                 return hit;
             }
             return null;
         }
 
-        private void InteractWithMovement(RaycastHit? hit)
+        private void ProcessInteraction(Vector2 mousePosition)
         {
-            if (hit != null) {
-                GetComponent<Mover>().StartMoveAction(hit.Value.point);
+            _interacting = true;
+
+            combatTarget = CheckCombatHover(mousePosition);
+            if (combatTarget != null) {
+                return;
+            }
+
+            RaycastHit? movDestination = CheckMovementHover(mousePosition);
+            if (movDestination != null) {
+                _lastMovementTarget = movDestination.Value.point;
+            } else {
+                _lastMovementTarget = null;
             }
         }
 
-        private void SetCursor(CursorType type)
+        private void UpdateMovementTarget(Vector2 mousePosition)
         {
-            CursorMapping mapping = GetCursorMapping(type);
-            Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
-        }
+            if (combatTarget)
+                return;
 
-        private CursorMapping GetCursorMapping(CursorType type)
-        {
-            foreach (CursorMapping mapping in cursorMappings) {
-                if (mapping.type == type) {
-                    return mapping;
-                }
+            if (!_interacting)
+                return;
+
+            RaycastHit? movementTarget = CheckMovementHover(mousePosition);
+            if (movementTarget != null) {
+                _lastMovementTarget = movementTarget.Value.point;
             }
-            return cursorMappings[0];
         }
 
-        private static Ray GetMouseRay()
+        private void ClearTarget()
         {
-            return Camera.main.ScreenPointToRay(Input.mousePosition);
+            _interacting = false;
+            combatTarget = null;
+            _lastMovementTarget = null;
+        }
+
+        private void Move(Vector3 point)
+        {
+            GetComponent<Mover>().StartMoveAction(point);
+        }
+
+        private static Ray GetMouseRay(Vector2 mousePosition)
+        {
+            return Camera.main.ScreenPointToRay(mousePosition);
         }
     }
 }

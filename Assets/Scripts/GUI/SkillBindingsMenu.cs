@@ -1,6 +1,6 @@
 ﻿/* Example level loader */
 using UnityEngine;
-using System.Collections;
+using UnityEngine.InputSystem;
 
 public class SkillBindingsMenu : MonoBehaviour
 {
@@ -15,15 +15,13 @@ public class SkillBindingsMenu : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !menuIsOpen)
-        {
+        if (Keyboard.current[Key.Escape].wasPressedThisFrame && !menuIsOpen) {
             Debug.Log("open menu");
             menuIsOpen = true;
             pauseMenuUI.SetActive(true);
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Escape) && menuIsOpen)
-        {
+        if (Keyboard.current[Key.Escape].wasPressedThisFrame && menuIsOpen) {
             Debug.Log("close menu");
             menuIsOpen = false;
             pauseMenuUI.SetActive(false);

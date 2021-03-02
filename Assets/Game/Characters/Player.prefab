@@ -42,6 +42,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e922bf73010fd18008f41ddcd0fadfaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackSpeed: 0
   exp: 0
   playerLevel: 100
   dexterity: 0
@@ -74,6 +75,7 @@ MonoBehaviour:
   - type: 3
     texture: {fileID: 2800000, guid: 44a99ee545fd8ba46a452b12c1f9378b, type: 3}
     hotspot: {x: 0, y: 0}
+  _inputReader: {fileID: 11400000, guid: dab7a3f7917de09409e0b84842bbdd4f, type: 2}
 --- !u!114 &7932318623709307606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fe264f0e5c82d47a0f83e04f5a23c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputReader: {fileID: 11400000, guid: dab7a3f7917de09409e0b84842bbdd4f, type: 2}
   pfArrow: {fileID: 4602237975541522724, guid: 7599b59706731c145af154305326027f, type: 3}
 --- !u!1001 &5714826083650325038
 PrefabInstance:

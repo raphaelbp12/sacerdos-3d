@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Scrds.Movement;
+using UnityEngine.InputSystem;
 
 namespace Scrds.Combat
 {
-    public class Walk: Skill
+    public class Walk : Skill
     {
         public Vector3? mouseProjected;
         private string name = "Walk";
@@ -13,16 +12,15 @@ namespace Scrds.Combat
         private GameObject playerGameObject;
         private Mover moverController;
 
-        public Walk(GameObject player){
+        public Walk(GameObject player)
+        {
             this.playerGameObject = player;
             this.moverController = playerGameObject.GetComponent<Mover>();
         }
 
         public override void DoAction()
         {
-            if(this.mouseProjected == null) return;
-            Debug.Log(this.name);
-            Debug.Log(Input.mousePosition);
+            if (this.mouseProjected == null) return;
             this.moverController.MoveTo(this.mouseProjected.Value, 0.0f);
         }
     }
