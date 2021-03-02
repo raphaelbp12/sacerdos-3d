@@ -61,16 +61,16 @@ namespace Scrds.Control
                 return;
             }
 
-            if (checkCombatHover(mousePosition) != null) return;
+            if (CheckCombatHover(mousePosition) != null) return;
             if (combatTarget) {
                 _cursorManager.SetCursor(CursorType.Combat);
                 return;
             }
 
-            checkMovementHover(mousePosition);
+            CheckMovementHover(mousePosition);
         }
 
-        private CombatTarget checkCombatHover(Vector2 mousePosition)
+        private CombatTarget CheckCombatHover(Vector2 mousePosition)
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay(mousePosition));
             foreach (RaycastHit hit in hits) {
@@ -95,7 +95,7 @@ namespace Scrds.Control
             GetComponent<Fighter>().Attack(target.gameObject);
         }
 
-        private RaycastHit? checkMovementHover(Vector2 mousePosition)
+        private RaycastHit? CheckMovementHover(Vector2 mousePosition)
         {
             RaycastHit hit;
             bool hasHit = Physics.Raycast(GetMouseRay(mousePosition), out hit);
@@ -111,12 +111,12 @@ namespace Scrds.Control
         {
             _interacting = true;
 
-            combatTarget = checkCombatHover(mousePosition);
+            combatTarget = CheckCombatHover(mousePosition);
             if (combatTarget != null) {
                 return;
             }
 
-            RaycastHit? movDestination = checkMovementHover(mousePosition);
+            RaycastHit? movDestination = CheckMovementHover(mousePosition);
             if (movDestination != null) {
                 _lastMovementTarget = movDestination.Value.point;
             } else {
@@ -132,7 +132,7 @@ namespace Scrds.Control
             if (!_interacting)
                 return;
 
-            RaycastHit? movementTarget = checkMovementHover(mousePosition);
+            RaycastHit? movementTarget = CheckMovementHover(mousePosition);
             if (movementTarget != null) {
                 _lastMovementTarget = movementTarget.Value.point;
             }
