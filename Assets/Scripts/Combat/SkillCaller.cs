@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +15,7 @@ namespace Scrds.Combat
     }
     public class SkillCaller : MonoBehaviour
     {
+        [SerializeField] private InputReader _inputReader = default;
         [SerializeField] private Transform pfArrow;
 
         private GameObject playerGameObject;
@@ -28,9 +28,6 @@ namespace Scrds.Combat
 
         Plane m_Plane;
         Vector3 m_DistanceFromCamera;
-        public SkillCaller()
-        {
-        }
 
         void Start()
         {
@@ -46,14 +43,21 @@ namespace Scrds.Combat
             //Create a new plane with normal (0,0,1) at the position away from the camera you define in the Inspector. This is the plane that you can click so make sure it is reachable.
             this.m_Plane = new Plane(Vector3.forward, this.m_DistanceFromCamera);
         }
+
+        private void OnEnable()
+        {
+            _inputReader.UseSkillEvent += Call;
+        }
+
+        private void OnDisable()
+        {
+            _inputReader.UseSkillEvent -= Call;
+        }
+
         private List<SkillsList> skills = new List<SkillsList>(){
             SkillsList.walk,
             SkillsList.throwArrow,
             SkillsList.throwArrow,
-            SkillsList.throwArrow,
-            SkillsList.flameDash,
-            SkillsList.flameDash,
-            SkillsList.flameDash,
             SkillsList.flameDash
         };
 
