@@ -37,7 +37,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     void SetSkillCallbacks(InputActionMap skillsActionMap)
     {
         foreach ((int skillId, InputAction action) in skillsActionMap.Select((v, i) => (i, v))) {
-            Action<InputAction.CallbackContext> handler = (ctx) => { OnSkill(skillId, ctx); };
+            void handler(InputAction.CallbackContext ctx) { OnSkill(skillId, ctx); }
             action.performed += handler;
             action.canceled += handler;
             action.started += handler;
