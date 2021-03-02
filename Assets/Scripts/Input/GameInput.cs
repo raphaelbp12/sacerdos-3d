@@ -27,18 +27,18 @@ public class @GameInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Mouse Movement"",
-                    ""type"": ""Button"",
-                    ""id"": ""3a3d48ed-6674-4279-b364-74d40f712b3c"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Mouse Position"",
+                    ""type"": ""Value"",
+                    ""id"": ""5542abaf-a035-40d7-a051-d9df6571289b"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Mouse Position"",
-                    ""type"": ""Value"",
-                    ""id"": ""527a95fe-3a31-4e95-a0d5-35ff82435b87"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""name"": ""Mouse Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""3a3d48ed-6674-4279-b364-74d40f712b3c"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -125,18 +125,7 @@ public class @GameInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mouse Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b0bae9d1-861b-4201-b81e-952c92d5b488"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Mouse Position"",
+                    ""action"": ""Mouse Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -159,6 +148,17 @@ public class @GameInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Toggle Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ab9bc3f-55b8-493d-95f8-606c6d1f28eb"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -298,8 +298,8 @@ public class @GameInput : IInputActionCollection, IDisposable
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
-        m_Gameplay_MouseMovement = m_Gameplay.FindAction("Mouse Movement", throwIfNotFound: true);
         m_Gameplay_MousePosition = m_Gameplay.FindAction("Mouse Position", throwIfNotFound: true);
+        m_Gameplay_MouseInteraction = m_Gameplay.FindAction("Mouse Interaction", throwIfNotFound: true);
         m_Gameplay_ToggleMenu = m_Gameplay.FindAction("Toggle Menu", throwIfNotFound: true);
         // Player Skills
         m_PlayerSkills = asset.FindActionMap("Player Skills", throwIfNotFound: true);
@@ -357,16 +357,16 @@ public class @GameInput : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Movement;
-    private readonly InputAction m_Gameplay_MouseMovement;
     private readonly InputAction m_Gameplay_MousePosition;
+    private readonly InputAction m_Gameplay_MouseInteraction;
     private readonly InputAction m_Gameplay_ToggleMenu;
     public struct GameplayActions
     {
         private @GameInput m_Wrapper;
         public GameplayActions(@GameInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
-        public InputAction @MouseMovement => m_Wrapper.m_Gameplay_MouseMovement;
         public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
+        public InputAction @MouseInteraction => m_Wrapper.m_Gameplay_MouseInteraction;
         public InputAction @ToggleMenu => m_Wrapper.m_Gameplay_ToggleMenu;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
@@ -380,12 +380,12 @@ public class @GameInput : IInputActionCollection, IDisposable
                 @Movement.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
-                @MouseMovement.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMouseMovement;
-                @MouseMovement.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMouseMovement;
-                @MouseMovement.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMouseMovement;
                 @MousePosition.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMousePosition;
+                @MouseInteraction.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMouseInteraction;
+                @MouseInteraction.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMouseInteraction;
+                @MouseInteraction.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMouseInteraction;
                 @ToggleMenu.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnToggleMenu;
                 @ToggleMenu.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnToggleMenu;
                 @ToggleMenu.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnToggleMenu;
@@ -396,12 +396,12 @@ public class @GameInput : IInputActionCollection, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
-                @MouseMovement.started += instance.OnMouseMovement;
-                @MouseMovement.performed += instance.OnMouseMovement;
-                @MouseMovement.canceled += instance.OnMouseMovement;
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
+                @MouseInteraction.started += instance.OnMouseInteraction;
+                @MouseInteraction.performed += instance.OnMouseInteraction;
+                @MouseInteraction.canceled += instance.OnMouseInteraction;
                 @ToggleMenu.started += instance.OnToggleMenu;
                 @ToggleMenu.performed += instance.OnToggleMenu;
                 @ToggleMenu.canceled += instance.OnToggleMenu;
@@ -469,8 +469,8 @@ public class @GameInput : IInputActionCollection, IDisposable
     public interface IGameplayActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnMouseMovement(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnMouseInteraction(InputAction.CallbackContext context);
         void OnToggleMenu(InputAction.CallbackContext context);
     }
     public interface IPlayerSkillsActions

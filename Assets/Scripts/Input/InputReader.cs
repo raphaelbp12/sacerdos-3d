@@ -10,8 +10,8 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     // Gameplay 
     public event Action<Vector2> MoveEvent = delegate { };
     public event Action<Vector2> MouseMoveEvent = delegate { };
-    public event Action<Vector2> StartedMouseMoveEvent = delegate { };
-    public event Action CancelMouseMoveEvent = delegate { };
+    public event Action<Vector2> MouseInteractionEvent = delegate { };
+    public event Action CancelMouseInteractionEvent = delegate { };
     public event Action<int> UseSkillEvent = delegate { };
     public event Action<int> CancelSkillEvent = delegate { };
     public event Action ToggleMenuEvent = delegate { };
@@ -60,16 +60,16 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
         MoveEvent.Invoke(context.ReadValue<Vector2>());
     }
 
-    public void OnMouseMovement(InputAction.CallbackContext context)
+    public void OnMouseInteraction(InputAction.CallbackContext context)
     {
         bool performed = context.phase == InputActionPhase.Performed;
         bool canceled = context.phase == InputActionPhase.Canceled;
         bool isOverUI = EventSystem.current.IsPointerOverGameObject();
 
         if (performed && !isOverUI) {
-            StartedMouseMoveEvent.Invoke(Mouse.current.position.ReadValue());
+            MouseInteractionEvent.Invoke(Mouse.current.position.ReadValue());
         } else if (canceled) {
-            CancelMouseMoveEvent.Invoke();
+            CancelMouseInteractionEvent.Invoke();
         }
     }
 

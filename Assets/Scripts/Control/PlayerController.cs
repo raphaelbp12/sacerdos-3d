@@ -2,6 +2,7 @@
 using Scrds.Movement;
 using Scrds.Combat;
 using Scrds.Core;
+using UnityEngine.InputSystem;
 
 namespace Scrds.Control
 {
@@ -19,6 +20,8 @@ namespace Scrds.Control
 
         Health health;
 
+        private Vector2 _lastMousePosition;
+
         private void Start()
         {
             health = GetComponent<Health>();
@@ -27,22 +30,23 @@ namespace Scrds.Control
 
         void OnEnable()
         {
-            _inputReader.StartedMouseMoveEvent += ProcessInteraction;
-            _inputReader.MouseMoveEvent += OnMouseMove;
-            _inputReader.MouseMoveEvent += UpdateCursor;
-            _inputReader.CancelMouseMoveEvent += ClearTarget;
+            _inputReader.MouseInteractionEvent += ProcessInteraction;
+            _inputReader.MouseMoveEvent += OnMousePosition;
+            _inputReader.CancelMouseInteractionEvent += ClearTarget;
         }
 
         void OnDisable()
         {
-            _inputReader.StartedMouseMoveEvent -= ProcessInteraction;
-            _inputReader.MouseMoveEvent -= OnMouseMove;
-            _inputReader.MouseMoveEvent -= UpdateCursor;
-            _inputReader.CancelMouseMoveEvent -= ClearTarget;
+            _inputReader.MouseInteractionEvent -= ProcessInteraction;
+            _inputReader.MouseMoveEvent -= OnMousePosition;
+            _inputReader.CancelMouseInteractionEvent -= ClearTarget;
         }
 
         void Update()
         {
+            UpdateCursor(_lastMousePosition);
+            OnMouseMove(_lastMousePosition);
+
             if (combatTarget) {
                 InteractWithCombat(combatTarget);
             }
@@ -52,22 +56,29 @@ namespace Scrds.Control
             }
         }
 
+        private void OnMousePosition(Vector2 position)
+        {
+            _lastMousePosition = position;
+        }
+
         private void UpdateCursor(Vector2 mousePosition)
         {
-            _cursorManager.SetCursor(CursorType.None);
-
             if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
                 _cursorManager.SetCursor(CursorType.GUI);
                 return;
             }
 
-            if (CheckCombatHover(mousePosition) != null) return;
-            if (combatTarget) {
+            if (combatTarget || CheckCombatHover(mousePosition) != null) {
                 _cursorManager.SetCursor(CursorType.Combat);
                 return;
             }
 
-            CheckMovementHover(mousePosition);
+            if (CheckMovementHover(mousePosition) != null) {
+                _cursorManager.SetCursor(CursorType.Movement);
+                return;
+            }
+
+            _cursorManager.SetDefaultCursor();
         }
 
         private CombatTarget CheckCombatHover(Vector2 mousePosition)
@@ -76,11 +87,10 @@ namespace Scrds.Control
             foreach (RaycastHit hit in hits) {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
                 if (target == null) continue;
-                if (target.tag == "Player") continue;
+                if (target.CompareTag("Player")) continue;
 
                 if (!GetComponent<Fighter>().IsTargetAlive(target.gameObject)) continue;
 
-                _cursorManager.SetCursor(CursorType.Combat);
                 return target;
             }
             return null;
@@ -101,7 +111,6 @@ namespace Scrds.Control
             bool hasHit = Physics.Raycast(GetMouseRay(mousePosition), out hit);
 
             if (hasHit) {
-                _cursorManager.SetCursor(CursorType.Movement);
                 return hit;
             }
             return null;

@@ -14,18 +14,18 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Mouse Movement",
-                    "type": "Button",
-                    "id": "3a3d48ed-6674-4279-b364-74d40f712b3c",
-                    "expectedControlType": "Button",
+                    "name": "Mouse Position",
+                    "type": "Value",
+                    "id": "5542abaf-a035-40d7-a051-d9df6571289b",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "Mouse Position",
-                    "type": "Value",
-                    "id": "527a95fe-3a31-4e95-a0d5-35ff82435b87",
-                    "expectedControlType": "Vector2",
+                    "name": "Mouse Interaction",
+                    "type": "Button",
+                    "id": "3a3d48ed-6674-4279-b364-74d40f712b3c",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -112,18 +112,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Mouse Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b0bae9d1-861b-4201-b81e-952c92d5b488",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Mouse Position",
+                    "action": "Mouse Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -146,6 +135,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Toggle Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ab9bc3f-55b8-493d-95f8-606c6d1f28eb",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse Position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
