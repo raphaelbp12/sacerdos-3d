@@ -24,7 +24,6 @@ namespace Scrds.Core
         public GameObject enemyPrefab;
         // public GameObject portalPrefab;
         // public GameObject towerPrefab;
-        public GameObject tileTesterPrefab;
         public GameObject camera;
         public int numberOfEnemies;
 
